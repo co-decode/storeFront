@@ -10,17 +10,20 @@ const typeDefs = gql`
   # Queries
   type Query {
     getAllItems: [Inventory]
+    getItem(id: ID): Inventory
   }
 
-    #   input PostInput {
-    #     item: String!
-    #     price: Int!
-    #   }
+  input InvInput {
+    item: String
+    price: Int
+  }
 
-    #   # Mutations
-    #   type Mutation {
-    #     createUser(user: PostInput): Inventory!
-    #   }
+  # Mutations
+  type Mutation {
+    createItem(inventory_item: InvInput): Inventory!
+    deleteItem(id: ID): String
+    updateItem(id: ID, inventory_item: InvInput): Inventory
+  }
 `;
 
 module.exports = { typeDefs };

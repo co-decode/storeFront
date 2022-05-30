@@ -4,12 +4,12 @@ import App from "./App";
 import "./index.css";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import userReducer from "./features/user";
+// import userReducer from "./features/user";
 
 
 const store = configureStore({
   reducer: {
-    user: userReducer,
+    // user: userReducer,
   },
 })
 

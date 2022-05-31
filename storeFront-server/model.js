@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const PostSchema = new mongoose.Schema({
+const InventorySchema = new mongoose.Schema({
   item: {
     type: String,
     // required: true,
@@ -9,6 +9,30 @@ const PostSchema = new mongoose.Schema({
     type: Number,
   },
 });
+const Inv = mongoose.model("Inventory", InventorySchema, "Inventory");
 
-const Inv = mongoose.model("Inventory", PostSchema, "Inventory");
-module.exports = Inv;
+const UserSchema = new mongoose.Schema({
+  username: {
+    type: String,
+  },
+  password: {
+    type: String,
+  },
+});
+const Users = mongoose.model("Users", UserSchema, "Users");
+
+
+const OrderDetail = new mongoose.Schema({
+  item: String,
+  amount: Number,
+});
+
+const OrderSchema = new mongoose.Schema({
+  user: String,
+  timestamp: String,
+  order: [OrderDetail],
+  price: Number,
+});
+const Orders = mongoose.model("Orders", OrderSchema, "Orders")
+
+module.exports = { Inv, Users, Orders };

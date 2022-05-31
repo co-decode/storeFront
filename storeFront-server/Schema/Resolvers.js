@@ -1,13 +1,22 @@
-const Inv = require("../model");
+const {Inv, Users, Orders} = require("../model");
 
 const resolvers = {
   Query: {
+  // Inventory
     getAllItems: async () => {
       return await Inv.find();
     },
     getItem: async (parent, { id }, context, info) => {
       return await Inv.findById(id);
     },
+  // Users
+    getUsers: async () => {
+      return await Users.find();
+    },
+  // Orders
+    getOrders: async () => {
+      return await Orders.find();
+    }
   },
 
   Mutation: {

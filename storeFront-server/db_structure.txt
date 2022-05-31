@@ -1,0 +1,22 @@
+db = storeFront
+collections = Inventory, Users, Orders
+
+Inventory: {
+    item: String,
+    price: Number,
+}
+
+Users: {
+    username: String,
+    password: String,
+}
+
+Orders: {
+    user: String,
+    timestamp: new Timestamp(),
+    order: {
+        item: String,
+        amount: Number,
+    },
+    price: Number,
+}

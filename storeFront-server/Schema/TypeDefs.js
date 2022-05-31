@@ -7,10 +7,31 @@ const typeDefs = gql`
     price: Int
   }
 
+  type Users {
+    id: ID
+    username: String
+    password: String
+  }
+  
+  type OrderDetail {
+    item: String
+    amount: Int
+  }
+
+  type Orders{
+    id: ID
+    user: String
+    timestamp: String
+    order: [OrderDetail]
+    price: Int
+  }
+
   # Queries
   type Query {
     getAllItems: [Inventory]
     getItem(id: ID): Inventory
+    getUsers: [Users]
+    getOrders: [Orders]
   }
 
   input InvInput {

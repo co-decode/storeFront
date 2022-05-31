@@ -1,24 +1,11 @@
-import {configureStore, createSlice} from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
+import counterReducer from "./features/counter/counterSlice";
 
-interface Adder {
-    amount: number
-}
-
-const initialState: Adder = {
-    amount: 0 ,
-}
-
-export const adderSlice = createSlice({
-    name: 'adder',
-    initialState,
-    reducers: {
-        increment: (amount) => {
-            // amount.value += 1;
-        }
-    }
-
+export const store = configureStore({
+    reducer: {
+        counter: counterReducer,
+    },
 })
 
-export default configureStore({
-    reducer: {},
-})
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

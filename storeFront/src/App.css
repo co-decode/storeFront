@@ -3,8 +3,15 @@ html {
     /* scrollbar-width:none; */
 }
 
-img {
+#bg {
     position:absolute;
     right: 0;
     height: 1368px;
 }
+
+/* #homeText {
+    font-style:italic;
+    position:absolute;
+    z-index: 1000;
+    padding: 50px;
+} */

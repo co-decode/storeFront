@@ -39,12 +39,39 @@ const typeDefs = gql`
     price: Int
   }
 
+  input UserInput {
+    username: String
+    password: String
+  }
+
+
+  input OrderDetailInput {
+    item: String
+    amount: Int
+  }
+
+  input OrderInput {
+    user: String
+    timestamp: String
+    order: [OrderDetailInput]
+    price: Int
+  }
+
   # Mutations
   type Mutation {
     createItem(inventory_item: InvInput): Inventory!
     deleteItem(id: ID): String
     updateItem(id: ID, inventory_item: InvInput): Inventory
+
+    createUser(user: UserInput): Users!
+    deleteUser(id: ID): String
+    updateUser(id: ID, user: UserInput): Users
+
+    createOrder(ordered: OrderInput): Orders!
+    cancelOrder(id: ID): String
   }
 `;
+
+
 
 module.exports = { typeDefs };

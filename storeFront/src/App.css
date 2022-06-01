@@ -1,1 +1,10 @@
+html {
+    overflow: hidden;
+    /* scrollbar-width:none; */
+}
 
+img {
+    position:absolute;
+    right: 0;
+    height: 1368px;
+}

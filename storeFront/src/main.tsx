@@ -5,16 +5,21 @@ import "./index.css";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { Provider as URQLProvider, createClient } from "urql";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const client = createClient({
-  url: 'http://localhost:3001/graphql',
-})
+  url: "http://localhost:3001/graphql",
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <URQLProvider value={client}>
       <Provider store={store}>
-        <App />
+        <Router>
+          <Routes>
+            <Route path="/" element={<App />}></Route>
+          </Routes>
+        </Router>
       </Provider>
     </URQLProvider>
   </React.StrictMode>

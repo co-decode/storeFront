@@ -9,6 +9,18 @@ html {
     height: 1368px;
 }
 
+@media (min-width: 1580px) {
+    #bg {
+        width: 100vw;
+    }
+}
+
+@media (min-height: 1300px) {
+    #bg {
+        height: 100vh;
+    }
+}
+
 /* #homeText {
     font-style:italic;
     position:absolute;

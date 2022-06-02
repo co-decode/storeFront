@@ -2,6 +2,11 @@ import { Outlet } from "react-router-dom";
 export default function Login() {
   return (
     <div className="position-relative w-25 mx-auto mt-5">
+
+      <div className="card">
+        <h5 className="card-header"><Outlet/></h5>
+        <div className="card-body">
+        
       <div className="mb-3">
         <label htmlFor="formControlInput1" className="form-label">
           Username
@@ -24,7 +29,11 @@ export default function Login() {
         //   onChange={}
         ></input>
       </div>
-      <Outlet/>
+      <a href="#" className="btn btn-primary">Go somewhere</a>
+
+      </div>
+      </div>
+      
     </div>
   );
 }

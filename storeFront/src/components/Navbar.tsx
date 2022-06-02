@@ -55,13 +55,13 @@ export default function Navbar() {
                 aria-labelledby="navbarDropdownMenuLink"
               >
                 <li>
-                  <Link className="dropdown-item" to="/login/create">
-                    Create Account
+                  <Link className="dropdown-item" to="/login">
+                    Use Existing Account
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/login">
-                    Use Existing Account
+                  <Link className="dropdown-item" to="/login/create">
+                    Create Account
                   </Link>
                 </li>
               </ul>

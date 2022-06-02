@@ -1,31 +1,18 @@
-html {
-    overflow: hidden;
-    /* scrollbar-width:none; */
-}
-
-#bg {
-    position:absolute;
+#bgContainer {
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../bg121.jpg");
+    background-size: 100vw auto;
+    background-repeat:no-repeat;
     top:0;
     right: 0;
-    z-index: -1;
-    height: 1368px;
-}
-
-@media (min-width: 1580px) {
-    #bg {
-        width: 100vw;
-    }
-}
-
-@media (min-height: 1300px) {
-    #bg {
-        height: 100vh;
-    }
-}
-
-/* #homeText {
-    font-style:italic;
     position:absolute;
-    z-index: 1000;
-    padding: 50px;
-} */
+    z-index: -1;
+}
+
+@media (orientation: portrait) {
+    #bgContainer {
+        background-size: auto 100vh;
+        background-position:right;
+    }
+}

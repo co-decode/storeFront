@@ -4,7 +4,7 @@ export default function Shop() {
       This is the shop
       <div className="row gap-5 justify-content-center">
         <div className="card" style={{ width: "18rem", padding:0 }}>
-          <img src="../../duck.jpg" className="card-img-top" alt="..." />
+          <img src="../../20kg.jpg" className="card-img-top borderless" style={{borderColor: "none"}} alt="..." />
           <div className="card-body">
             <p className="card-text">
               Item One <br/>
@@ -13,8 +13,8 @@ export default function Shop() {
           </div>
         </div>
 
-        <div className="card" style={{ width: "18rem" }}>
-          <img src="../../duck.jpg" className="card-img-top" alt="..." />
+        <div className="card" style={{ width: "18rem", padding:0 }}>
+          <img src="../../SkippingRope.jpg" className="card-img-top" alt="..." />
           <div className="card-body">
             <p className="card-text">
               
@@ -22,8 +22,8 @@ export default function Shop() {
           </div>
         </div>
 
-        <div className="card" style={{ width: "18rem" }}>
-          <img src="../../duck.jpg" className="card-img-top" alt="..." />
+        <div className="card" style={{ width: "18rem", padding:0 }}>
+          <img src="../../Gripper.jpg" className="card-img-top" alt="..." />
           <div className="card-body">
             <p className="card-text">
               

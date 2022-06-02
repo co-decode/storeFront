@@ -3,7 +3,9 @@ import Navbar from "./Navbar"
 export default function Home() {
   return (
     <>
-      <img id="bg" src="../bgLQ.jpg" />
+      <div id="bgContainer">
+        {/* <img id="bg" src="../bgLQ.jpg" /> */}
+      </div>
 
       <div className="container position-relative">
         <h1 className="display-1">Welcome,</h1>

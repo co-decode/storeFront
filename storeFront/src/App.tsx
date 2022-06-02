@@ -109,7 +109,6 @@ function App() {
 
   return (
     <div id="app-wrap" className="container-fluid">
-      <img id="bg" src="../bgLQ.jpg" />
       <Navbar />
       <Outlet />
     </div>

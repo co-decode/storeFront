@@ -29,6 +29,7 @@ const typeDefs = gql`
   # Queries
   type Query {
     getAllItems: [Inventory]
+    getItemsPaged(limit: Int, offset: Int): [Inventory]
     getItem(id: ID): Inventory
     getUsers: [Users]
     getOrders: [Orders]

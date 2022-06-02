@@ -6,6 +6,9 @@ const resolvers = {
     getAllItems: async () => {
       return await Inv.find();
     },
+    getItemsPaged: async(p, {limit, offset}) => {
+      return await Inv.find().skip(offset * limit).limit(limit)
+    },
     getItem: async (parent, { id }, context, info) => {
       return await Inv.findById(id);
     },

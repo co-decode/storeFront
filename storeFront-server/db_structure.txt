@@ -6,6 +6,26 @@ Inventory: {
     price: Number,
 }
 
+db.Inventory.insertMany([
+    {_id: 1, item:"Boxing Bag", price:120 , image:"BBag"},
+    {_id: 2, item:"Battle Ropes" , price:90 , image:"BRope"},
+    {_id: 3, item:"Lifting Gloves" , price:45 , image:"Glove"},
+    {_id: 4, item:"Gymnastic Rings" , price:65 , image:"Ring"},
+    {_id: 5, item:"Yoga Mat" , price:30 , image:"YMat"},
+    {_id: 6, item:"Skippping Rope" , price:12 , image:"SRope"},
+    {_id: 7, item:"4kg Kettlebell" , price:40 , image:"4kgK"},
+    {_id: 8, item:"2kg Dumbbell" , price:20 , image:"2kgD"},
+    {_id: 9, item:"Gripper", price:15 , image:"Gripper"},
+    {_id: 10, item:"32kg Kettlebell", price:170 , image:"32kgK"},
+    {_id: 11, item:"10kg Dumbbell" , price:70 , image:"10kgD"},
+    {_id: 12, item:"25kg Bumper Plate" , price:160 , image:"25kgP"},
+    {_id: 13, item:"15kg Bumper Plate" , price:80 , image:"15kgP"},
+    {_id: 14, item:"20kg Iron Plate" , price:85 , image:"20kgP"},
+    {_id: 15, item:"10kg Iron Plate" , price:50 , image:"10kgP"},
+    {_id: 16, item:"5kg Iron Plate" , price:35 , image:"5kgP"}
+])
+
+
 Users: {
     username: String,
     password: String,

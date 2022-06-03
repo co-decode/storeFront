@@ -25,6 +25,7 @@ export default function Shop({ offset, limit }: variablesQ) {
     variables: { offset, limit },
   });
   const page = useSelector((state: RootState) => state.page.page);
+
   const dispatch = useDispatch();
   const { data, fetching, error } = result;
   if (fetching) return <p>Loading...</p>;
@@ -56,7 +57,7 @@ export default function Shop({ offset, limit }: variablesQ) {
       </div>
       <nav aria-label="Item Pages">
         <ul className="pagination pagination-lg justify-content-center mt-4">
-          {[0,1,2,3].map(val => { return(
+          {[0,1,2,3,4,5].map(val => { return(
             <li key={val} className={`page-item ${page === val ? 'active': ''}`} aria-current="page">
             <span
               className="page-link" onClick={() => dispatch(setPage(val))}>

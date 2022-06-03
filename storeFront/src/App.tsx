@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import Nav from "./Nav";
 import About from "./components/About";
 import Cart from "./components/Cart";
@@ -15,6 +15,8 @@ import { RootState } from "./store";
 
 export default function App() {
   const page = useSelector((state: RootState) => state.page.page);
+  let {p} = useParams()
+
   return (
     <Routes>
       <Route path="/" element={<Nav />}>
@@ -24,7 +26,8 @@ export default function App() {
           <Route index element={<Existing />} />
           <Route path="create" element={<Create />} />
         </Route>
-        <Route path="shop" element={<Shop offset={page} limit={3} />} />
+        <Route path={`shop`} element={<Shop offset={page} limit={3} />}>
+        </Route>
         <Route path="cart" element={<Cart />} />
         <Route path="user" element={<User />}>
           <Route path="change" element={<ChangePassword />} />

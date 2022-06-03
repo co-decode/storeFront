@@ -16,3 +16,18 @@
         background-position:right;
     }
 }
+
+.wrapper {
+    position: relative;
+    height: 0;
+    /* Formula is: (height / width * 100%) */
+    padding-top: 100%;
+  }
+  
+  .wrapper-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    height: auto; 
+  }

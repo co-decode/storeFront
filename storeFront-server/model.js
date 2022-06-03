@@ -8,6 +8,7 @@ const InventorySchema = new mongoose.Schema({
   price: {
     type: Number,
   },
+  image: String,
 });
 const Inv = mongoose.model("Inventory", InventorySchema, "Inventory");
 

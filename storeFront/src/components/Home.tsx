@@ -4,7 +4,6 @@ export default function Home() {
   return (
     <>
       <div id="bgContainer">
-        {/* <img id="bg" src="../bgLQ.jpg" /> */}
       </div>
 
       <div className="container position-relative">

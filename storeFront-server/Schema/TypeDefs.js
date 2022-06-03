@@ -5,6 +5,7 @@ const typeDefs = gql`
     id: ID
     item: String
     price: Int
+    image: String
   }
 
   type Users {

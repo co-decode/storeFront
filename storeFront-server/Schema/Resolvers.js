@@ -16,6 +16,9 @@ const resolvers = {
     getUsers: async () => {
       return await Users.find();
     },
+    checkUser: async(p, {username}) => {
+      return await Users.find({username:username})
+    }
   },
     // Orders
   //   getOrders: async () => {
@@ -53,9 +56,14 @@ const resolvers = {
     //Users
     createUser: async (p, args) => {
       const { username, password } = args.user;
-      const user = new Users({ username, password });
-      await user.save();
-      return user;
+      const res = await Users.find({username:username})
+      if (!res[0]){
+        const user = new Users({ username, password });
+        await user.save();
+        return user;
+      }
+      console.log(res[0], 'Already Exists')
+      return "That user already exists!"
     },
     deleteUser: async (p, args) => {
       await Users.findByIdAndDelete(args.id);

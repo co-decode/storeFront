@@ -36,6 +36,7 @@ const typeDefs = gql`
     getItem(id: ID): Inventory
     getUsers: [Users]
     getOrders: [Orders]
+    checkUser(username: String): [Users]
   }
 
   input InvInput {

@@ -1,5 +1,30 @@
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
+import { useMutation } from "urql";
+import { RootState } from "../store";
+import { setUser, setPass } from "../features/login/loginSlice";
+
+const CreateAccount = `
+  mutation ($username: String, $password: String) {
+    createUser(user: {username: $username, password: $password})
+    {
+      username
+      password
+    }
+}
+`;
+
 export default function Login() {
+
+  const dispatch = useDispatch();
+  const userField = useSelector((state:RootState)=>state.login.username)
+  const passField = useSelector((state:RootState)=>state.login.password)
+  const [createUserResult, createAccount] = useMutation(CreateAccount)
+
+  const createUser = (username: string, password: string) => {
+    const variables = {username, password};
+    createAccount(variables).then(result=> result.error ? console.error(result.error): null)
+  }
   return (
     <div className="position-relative w-25 mx-auto mt-5">
 
@@ -16,6 +41,7 @@ export default function Login() {
           className="form-control"
           id="formControlInput1"
           placeholder="username"
+          onChange={(e)=>dispatch(setUser(e.target.value))}
         />
       </div>
       <div className="mb-3">
@@ -26,10 +52,10 @@ export default function Login() {
           className="form-control"
           id="formControlInput2"
           placeholder="password"
-        //   onChange={}
+          onChange={(e)=>dispatch(setPass(e.target.value))}
         ></input>
       </div>
-      <a href="#" className="btn btn-primary">Go somewhere</a>
+      <button className="btn btn-primary" onClick={()=>createUser(userField,passField)}>Create Account</button>
 
       </div>
       </div>

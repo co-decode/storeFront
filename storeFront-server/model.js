@@ -12,6 +12,17 @@ const InventorySchema = new mongoose.Schema({
 });
 const Inv = mongoose.model("Inventory", InventorySchema, "Inventory");
 
+const OrderDetail = new mongoose.Schema({
+  item: String,
+  amount: Number,
+  price: Number,
+});
+
+const OrderSchema = new mongoose.Schema({
+  date: String,
+  items: [OrderDetail],
+  total: Number,
+});
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -19,21 +30,11 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
   },
+  orders: [OrderSchema],
 });
 const Users = mongoose.model("Users", UserSchema, "Users");
 
 
-const OrderDetail = new mongoose.Schema({
-  item: String,
-  amount: Number,
-});
+// const Orders = mongoose.model("Orders", OrderSchema, "Orders")
 
-const OrderSchema = new mongoose.Schema({
-  user: String,
-  timestamp: String,
-  order: [OrderDetail],
-  price: Number,
-});
-const Orders = mongoose.model("Orders", OrderSchema, "Orders")
-
-module.exports = { Inv, Users, Orders };
+module.exports = { Inv, Users };

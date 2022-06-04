@@ -1,4 +1,4 @@
-const { Inv, Users, Orders } = require("../model");
+const { Inv, Users } = require("../model");
 
 const resolvers = {
   Query: {
@@ -16,11 +16,12 @@ const resolvers = {
     getUsers: async () => {
       return await Users.find();
     },
-    // Orders
-    getOrders: async () => {
-      return await Orders.find();
-    }
   },
+    // Orders
+  //   getOrders: async () => {
+  //     return await Orders.find();
+  //   }
+  // },
 
   Mutation: {
     // Inventory
@@ -70,17 +71,31 @@ const resolvers = {
       const userUp = await Users.findByIdAndUpdate(id, updates, {new:true});
       return userUp;
     },
+    appendOrder: async (p,args) => {
+      const {id} = args;
+      const {orders} = args.user;
+      const updates = {};
+      updates.orders = orders;
+      const orderUp = await Users.findByIdAndUpdate(id, {$push:{orders}}, {new:true});
+      return orderUp;
+    },
+    cancelOrder: async (p,args) => {
+      const {id1,id2} = args;
+      // const {orders} = args.user;
+      const orderDown = await Users.findByIdAndUpdate(id1, {$pull:{orders: {_id: id2} }}, {new:true} )
+      return orderDown
+    }
 
     // Orders
-    createOrder: async (p, args) => {
-      const ordered = new Orders(args.ordered);
-      await ordered.save();
-      return ordered
-    },
-    cancelOrder: async (p, args) => {
-      await Orders.findByIdAndDelete(args.id);
-      return "Order has been cancelled"
-    }
+    // createOrder: async (p, args) => {
+    //   const ordered = new Orders(args.ordered);
+    //   await ordered.save();
+    //   return ordered
+    // },
+    // cancelOrder: async (p, args) => {
+    //   await Orders.findByIdAndDelete(args.id);
+    //   return "Order has been cancelled"
+    // }
     
   },
 };

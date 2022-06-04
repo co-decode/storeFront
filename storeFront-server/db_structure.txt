@@ -2,8 +2,10 @@ db = storeFront
 collections = Inventory, Users, Orders
 
 Inventory: {
+    id: Number,
     item: String,
     price: Number,
+    image: String,
 }
 
 db.Inventory.insertMany([
@@ -29,14 +31,49 @@ db.Inventory.insertMany([
 Users: {
     username: String,
     password: String,
+    orders: [{
+        date: String,
+        items: [{
+            item: String,
+            amount: Number,
+            price: Number,
+            },
+            ],
+        price: Number,
+    },]
 }
 
-Orders: {
-    user: String,
-    timestamp: new Timestamp(),
-    order: {
-        item: String,
-        amount: Number,
+db.Users.insertMany([
+    {username:"James", password:"secret", orders: [{
+        id: ObjectId(),
+        date: "2022-06-04",
+        items: [{
+            item: "20kg Iron Plate",
+            amount: 2,
+            price: 170,
+        },
+        {   item: "10kg Iron Plate",
+            amount: 2,
+            price: 100,
+            }],
+        total: 270,
+    }]
     },
-    price: Number,
-}
+    {username:"Alice", password:"password", orders: [{
+        id: ObjectId(),
+        date: "2022-06-01",
+        items: [{
+            item: "25kg Bumper Plate",
+            amount: 2,
+            price: 320,
+        },
+        {   item: "10kg Dumbbell",
+            amount: 2,
+            price: 140,
+            }],
+        total: 460,
+    }]
+    }
+])
+
+

@@ -8,24 +8,26 @@ const typeDefs = gql`
     image: String
   }
 
-  type Users {
-    id: ID
-    username: String
-    password: String
-  }
-  
   type OrderDetail {
     item: String
     amount: Int
+    price: Int
   }
 
   type Orders{
     id: ID
-    user: String
-    timestamp: String
-    order: [OrderDetail]
-    price: Int
+    date: String
+    items: [OrderDetail]
+    total: Int
   }
+
+  type Users {
+    id: ID
+    username: String
+    password: String
+    orders: [Orders]
+  }
+  
 
   # Queries
   type Query {
@@ -44,19 +46,20 @@ const typeDefs = gql`
   input UserInput {
     username: String
     password: String
+    orders: [OrderInput]
   }
 
 
   input OrderDetailInput {
     item: String
     amount: Int
+    price: Int
   }
 
   input OrderInput {
-    user: String
-    timestamp: String
-    order: [OrderDetailInput]
-    price: Int
+    date: String
+    items: [OrderDetailInput]
+    total: Int
   }
 
   # Mutations
@@ -68,9 +71,10 @@ const typeDefs = gql`
     createUser(user: UserInput): Users!
     deleteUser(id: ID): String
     updateUser(id: ID, user: UserInput): Users
+    appendOrder(id: ID, user: UserInput): Users
 
     createOrder(ordered: OrderInput): Orders!
-    cancelOrder(id: ID): String
+    cancelOrder(id1: ID, id2: ID): Users
   }
 `;
 

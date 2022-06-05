@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+
 export default function Navbar() {
+
+  const currentUser = useSelector((state:RootState) => state.login.currentUser)
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-transparent">
       <div className="container-fluid">
@@ -39,7 +45,20 @@ export default function Navbar() {
                 Cart
               </Link>
             </li>
-            <li className="nav-item dropdown">
+            <li className="nav-item">
+              <Link className="nav-link" to="/login">
+                Login
+              </Link>
+            </li>
+            { currentUser.username ?
+            <li className="nav-item">
+              <Link className="nav-link" to="/user">
+                User Profile
+              </Link>
+            </li>
+            : null
+            } 
+            {/* <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"
                 to="/login"
@@ -65,8 +84,8 @@ export default function Navbar() {
                   </Link>
                 </li>
               </ul>
-            </li>
-            <li className="nav-item dropdown">
+            </li> */}
+            {/* <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"
                 to="/user"
@@ -92,7 +111,7 @@ export default function Navbar() {
                   </Link>
                 </li>
               </ul>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

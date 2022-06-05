@@ -1,10 +1,8 @@
 // import { useState } from 'react'
 import { useMutation, useQuery } from "urql";
-import { Counter } from "./features/counter/Counter";
-import { Logger } from "./features/login/Login";
 import { RootState } from "./store";
 import { useSelector, useDispatch } from "react-redux";
-import { setItem, setPrice } from "./features/itemSlice";
+import { setItem, setPrice } from "./slices/itemSlice";
 import "./App.css";
 
 import Navbar from "./components/Navbar";

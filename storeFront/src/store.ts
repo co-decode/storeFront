@@ -1,12 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./features/counter/counterSlice";
-import loginReducer from "./features/login/loginSlice";
-import itemReducer from "./features/itemSlice";
-import pageReducer from "./features/pageSlice";
+import loginReducer from "./slices/loginSlice";
+import itemReducer from "./slices/itemSlice";
+import pageReducer from "./slices/pageSlice";
 
 export const store = configureStore({
     reducer: {
-        counter: counterReducer,
         login: loginReducer,
         item: itemReducer,
         page: pageReducer,

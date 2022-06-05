@@ -16,15 +16,13 @@ const resolvers = {
     getUsers: async () => {
       return await Users.find();
     },
-    checkUser: async(p, {username}) => {
-      return await Users.find({username:username})
-    }
+    getUser: async (p, {id}) => {
+      return await Users.findById(id);
+    },
+    checkLogin: async(p, {username, password}) => {
+      return await Users.find({username, password});
+    },
   },
-    // Orders
-  //   getOrders: async () => {
-  //     return await Orders.find();
-  //   }
-  // },
 
   Mutation: {
     // Inventory
@@ -62,16 +60,15 @@ const resolvers = {
         await user.save();
         return user;
       }
-      console.log(res[0], 'Already Exists')
-      return "That user already exists!"
+      return {username: "FAILED"}
     },
     deleteUser: async (p, args) => {
       await Users.findByIdAndDelete(args.id);
       return "User has been deleted"
     },
-    updateUser: async (p,args) => {
-      const {id} = args;
-      const {password} = args.user;
+    updatePass: async (p,args) => {
+      const {id, password} = args;
+      // const {password} = args.user;
       const updates = {};
       if (password !== undefined) {
         updates.password = password;
@@ -80,8 +77,7 @@ const resolvers = {
       return userUp;
     },
     appendOrder: async (p,args) => {
-      const {id} = args;
-      const {orders} = args.user;
+      const {id, orders} = args;
       const updates = {};
       updates.orders = orders;
       const orderUp = await Users.findByIdAndUpdate(id, {$push:{orders}}, {new:true});
@@ -89,21 +85,9 @@ const resolvers = {
     },
     cancelOrder: async (p,args) => {
       const {id1,id2} = args;
-      // const {orders} = args.user;
       const orderDown = await Users.findByIdAndUpdate(id1, {$pull:{orders: {_id: id2} }}, {new:true} )
       return orderDown
     }
-
-    // Orders
-    // createOrder: async (p, args) => {
-    //   const ordered = new Orders(args.ordered);
-    //   await ordered.save();
-    //   return ordered
-    // },
-    // cancelOrder: async (p, args) => {
-    //   await Orders.findByIdAndDelete(args.id);
-    //   return "Order has been cancelled"
-    // }
     
   },
 };

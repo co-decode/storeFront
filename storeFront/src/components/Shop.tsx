@@ -1,6 +1,6 @@
 import { useQuery } from "urql";
 import { useDispatch, useSelector } from "react-redux";
-import { setPage } from "../features/pageSlice";
+import { setPage } from "../slices/pageSlice";
 import { RootState } from "../store";
 
 const getItemsQuery = `

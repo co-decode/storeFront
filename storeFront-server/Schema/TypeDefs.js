@@ -35,8 +35,8 @@ const typeDefs = gql`
     getItemsPaged(limit: Int, offset: Int): [Inventory]
     getItem(id: ID): Inventory
     getUsers: [Users]
-    getOrders: [Orders]
-    checkUser(username: String): [Users]
+    getUser(id:ID): Users
+    checkLogin(username: String, password: String): [Users]
   }
 
   input InvInput {
@@ -71,8 +71,8 @@ const typeDefs = gql`
 
     createUser(user: UserInput): Users!
     deleteUser(id: ID): String
-    updateUser(id: ID, user: UserInput): Users
-    appendOrder(id: ID, user: UserInput): Users
+    updatePass(id: ID, password: String): Users
+    appendOrder(id: ID, orders: [OrderInput]): Users
 
     createOrder(ordered: OrderInput): Orders!
     cancelOrder(id1: ID, id2: ID): Users

@@ -30,6 +30,14 @@ const CheckLogin = `
   }
 `;
 
+const CheckExistence = `
+  query ($username:String) {
+    checkExistence(username:$username) {
+      username
+    }
+  }
+`;
+
 export default function Login() {
   const dispatch = useDispatch();
   const userField = useSelector((state: RootState) => state.login.username);
@@ -39,6 +47,8 @@ export default function Login() {
   );
   const login = useSelector((state: RootState) => state.login.login);
   const [confirmCreate, setConfirmCreate] = useState(null);
+  const [failedLogin, setFailedLogin] = useState(false);
+  const [userExists, setUserExists] = useState(false);
   const [createUserResult, createAccount] = useMutation(CreateAccount);
   const [result, refreshQuery] = useQuery({
     query: CheckLogin,
@@ -46,6 +56,21 @@ export default function Login() {
     pause: true,
   });
   const { data, fetching, error } = result;
+  const [existResult, refreshExistence] = useQuery({
+    query: CheckExistence,
+    variables: {username: userField},
+    pause: true,
+  })
+
+  useEffect(()=> {
+    if(userField){
+    refreshExistence()}
+  },[userField])
+
+  useEffect(()=> {
+    const passfield = document.querySelector("#formControlInput2")
+    passfield!.classList.remove("is-valid")
+  },[passField])
 
   useEffect(() => {
     if (data) {
@@ -53,11 +78,11 @@ export default function Login() {
         if (data.checkLogin[0]) {
           dispatch(setCurrentUser(data.checkLogin[0]));
         }
+        else setFailedLogin(true)
       }
     }
   }, [data]);
 
-  let createResult;
   useEffect(() => {
     if (createUserResult.data) {
       if (createUserResult.data.createUser) {
@@ -67,6 +92,64 @@ export default function Login() {
       }
     }
   }, [createUserResult.data]);
+
+  useEffect(() => {
+    if(existResult.data){
+      if(existResult.data.checkExistence){
+        if(existResult.data.checkExistence[0]) {
+          if(existResult.data.checkExistence[0].username){
+            setUserExists(true)
+          }
+          else setUserExists(false)
+        }
+      }
+    }
+  },[existResult.data])
+
+  useEffect(() => {
+    if(failedLogin) {
+      const passfield = document.querySelector("#formControlInput2")
+      passfield!.classList.add("is-invalid")
+      if(!userExists) {
+        const userfield = document.querySelector("#formControlInput1")
+        userfield!.classList.add("is-invalid")
+      }
+    } 
+    else if(!failedLogin){
+      const passfield = document.querySelector("#formControlInput2")
+      passfield!.classList.remove("is-invalid")
+      const userfield = document.querySelector("#formControlInput1")
+      userfield!.classList.remove("is-invalid")
+    }
+  },[failedLogin])
+  
+  useEffect(() => {
+    if(userExists) {
+      const userfield = document.querySelector("#formControlInput1")
+      userfield!.classList.add("is-valid")
+    }
+    if(!userExists) {
+      const userfield = document.querySelector("#formControlInput1")
+      userfield!.classList.remove("is-valid")
+    }
+  },[userExists])
+
+  useEffect(() => {
+    if(currentUser.username && currentUser.username !== "FAILED"){
+      const passfield = document.querySelector("#formControlInput2")
+      passfield!.classList.add("is-valid")}
+  }, [currentUser.username])
+
+  useEffect(() => {
+    if(confirmCreate === "FAILED") {
+      const forms = document.querySelectorAll(".form-control")
+      forms.forEach(form=>{form.classList.add("is-invalid")})
+    } 
+    else if(confirmCreate !== "FAILED"){
+      const forms = document.querySelectorAll(".form-control")
+      forms.forEach(form=>{form.classList.remove("is-invalid")})
+    }
+  },[confirmCreate])
 
   // if (fetching) return <p>Loading...</p>;
   // if (error) return <p>Something has gone wrong: {error.message}</p>;
@@ -82,12 +165,17 @@ export default function Login() {
     if (confirmCreate) {
       setConfirmCreate(null);
     }
+    if (userExists) {
+      setUserExists(false)
+    }
+    setFailedLogin(false)
     dispatch(setUser(e.target.value));
   };
   const handleChangePass = (e: any) => {
     if (confirmCreate) {
       setConfirmCreate(null);
     }
+    setFailedLogin(false)
     dispatch(setPass(e.target.value));
   };
 
@@ -95,7 +183,9 @@ export default function Login() {
     if (login === "EXISTING") {
       refreshQuery();
     } else if (login === "CREATE") {
-      createUser(userField, passField);
+      if (userField && passField){
+        createUser(userField, passField);
+      }
     }
   };
 
@@ -115,15 +205,18 @@ export default function Login() {
         ? `${confirmCreate} has been successfully created!`
         : "User already exists"}
       <br />
-      {currentUser.username}
+      {currentUser.username} 
+      {/* {failedLogin.toString()} */}
+      {/* {userExists.toString()} */}
       <br />
-      {/* {JSON.stringify(createUserResult)} */}
+      {/* {JSON.stringify(data)} */}
+      {/* {JSON.stringify(existResult.data)} */}
       <div className="card">
         <h5 className="card-header">
-          {login === "EXISTING" ? "Login to an Account" : "Create an Account"}
+          {login === "EXISTING" ? "Login to an Existing Account" : "Create an Account"}
         </h5>
         <div className="card-body">
-          <div className="mb-3">
+          <div className="mb-33">
             <label htmlFor="formControlInput1" className="form-label">
               Username
             </label>
@@ -133,9 +226,12 @@ export default function Login() {
               id="formControlInput1"
               placeholder="username"
               onChange={(e) => handleChangeUser(e)}
+              required
             />
+            <div className="valid-feedback">This username exists</div>
+            <div className="invalid-feedback">{userField ? "This username does not exist" : "Username cannot be empty"}</div>
           </div>
-          <div className="mb-3">
+          <div className="mb-33 needs-validation">
             <label htmlFor="formControlInput2" className="form-label">
               Password
             </label>
@@ -145,13 +241,15 @@ export default function Login() {
               placeholder="password"
               onChange={(e) => handleChangePass(e)}
             ></input>
+            <div className="valid-feedback">This password is correct!</div>
+            <div className="invalid-feedback">{passField ? "Password is incorrect" : "Password cannot be empty"}</div>
           </div>
-          <button className="btn btn-primary" onClick={handleSubmit}>
+          <button className="btn btn-dark" onClick={handleSubmit}>
             {login === "EXISTING" ? "Login" : "Create Account"}
           </button>
         </div>
       </div>
-      <button onClick={handleSwitch}>
+      <button className="btn btn-dark mt-2" onClick={handleSwitch}>
         {login === "EXISTING"
           ? "Create a New Account"
           : "Login with an Existing Account"}

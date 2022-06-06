@@ -31,3 +31,12 @@
     max-width: 100%;
     height: auto; 
   }
+
+
+.valid-feedback, .invalid-feedback {
+    position:absolute;
+}
+
+.mb-33 {
+    margin-bottom: 33px;
+}

@@ -27,6 +27,10 @@ const typeDefs = gql`
     password: String
     orders: [Orders]
   }
+
+  type User {
+    username: String
+  }
   
 
   # Queries
@@ -37,6 +41,7 @@ const typeDefs = gql`
     getUsers: [Users]
     getUser(id:ID): Users
     checkLogin(username: String, password: String): [Users]
+    checkExistence(username:String): [User]
   }
 
   input InvInput {

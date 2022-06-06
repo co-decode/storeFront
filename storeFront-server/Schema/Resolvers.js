@@ -22,6 +22,9 @@ const resolvers = {
     checkLogin: async(p, {username, password}) => {
       return await Users.find({username, password});
     },
+    checkExistence: async(p, {username}) => {
+      return await Users.find({username});
+    },
   },
 
   Mutation: {

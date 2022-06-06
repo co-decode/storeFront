@@ -60,7 +60,7 @@ export default function User() {
                                 <li key={v.item}>{v.item}, Amount: {v.amount}, Price: {v.price}</li>
                                 )})}
                             </ul>
-                            <div>Total: {val.total}</div>
+                             <div>Total: {val.total}</div>
                             <hr/>
                         </div>
                     )

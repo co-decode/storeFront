@@ -40,3 +40,10 @@
 .mb-33 {
     margin-bottom: 33px;
 }
+
+.svg {
+    background-image: url(../eyesvg.svg);
+    background-repeat:no-repeat;
+    background-position:center;
+    vertical-align: super;
+}

@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { setCurrentUser } from "../slices/loginSlice";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
 
 export default function Navbar() {
-
-  const currentUser = useSelector((state:RootState) => state.login.currentUser)
+  const currentUser = useSelector(
+    (state: RootState) => state.login.currentUser
+  );
+  const dispatch = useDispatch();
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-transparent">
@@ -45,19 +48,28 @@ export default function Navbar() {
                 Cart
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
-            </li>
-            { currentUser.username ?
-            <li className="nav-item">
-              <Link className="nav-link" to="/user">
-                User Profile
-              </Link>
-            </li>
-            : null
-            } 
+            {currentUser.id ? (
+              <li className="nav-item">
+                <Link className="nav-link" to="/login"
+                // onClick={()=>dispatch(setCurrentUser({id:"",username:"",password:""}))}
+                >
+                  Logout
+                </Link>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">
+                  Login
+                </Link>
+              </li>
+            )}
+            {currentUser.id ? (
+              <li className="nav-item">
+                <Link className="nav-link" to="/user">
+                  User Profile
+                </Link>
+              </li>
+            ) : null}
             {/* <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"

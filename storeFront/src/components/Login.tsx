@@ -163,7 +163,7 @@ export default function Login() {
   // }, [currentUser.username])
 
   useEffect(() => {
-    const forms = document.querySelectorAll(".form-control")
+    const forms = document.querySelectorAll(".loginInput")
     if(confirmCreate === "fail") {
       forms.forEach(form=>{form.classList.add("is-invalid")})
     } 
@@ -177,7 +177,7 @@ export default function Login() {
   },[confirmCreate])
 
   useEffect(() => {
-    const forms:NodeListOf<HTMLInputElement> = document.querySelectorAll(".form-control")
+    const forms:NodeListOf<HTMLInputElement> = document.querySelectorAll(".loginInput")
     forms.forEach(form=>{form.classList.remove("is-invalid","is-valid")})
     forms.forEach(form=>{form.value = ""})
   }, [login])
@@ -232,6 +232,12 @@ export default function Login() {
     }
   };
 
+  const handleViewToggle = () => {
+    setViewPass(!viewPass);
+    const eye = document.querySelector(".eye")
+    !viewPass ? eye?.classList.add("eyeclosed") : eye?.classList.remove("eyeclosed")
+  }
+
 
   return (
     <div className="position-relative w-25 mx-auto mt-5" id='bob'>
@@ -258,7 +264,7 @@ export default function Login() {
             </label>
             <input
               type="text"
-              className="form-control"
+              className="form-control loginInput"
               id="formControlInput1"
               placeholder="username"
               onChange={(e) => handleChangeUser(e)}
@@ -274,10 +280,10 @@ export default function Login() {
             <label htmlFor="formControlInput2" className="form-label">
               Password
             </label>
-            <button className="btn svg" style={{display:"inline"}} onClick={()=>setViewPass(!viewPass)}></button>
+            <button className="btn eyeopen eye" style={{display:"inline"}} onClick={handleViewToggle}></button>
             <input
               type={viewPass ? "text" : "password"}
-              className="form-control"
+              className="form-control loginInput"
               id="formControlInput2"
               placeholder="password"
               onChange={(e) => handleChangePass(e)}

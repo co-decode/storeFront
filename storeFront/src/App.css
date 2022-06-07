@@ -41,9 +41,41 @@
     margin-bottom: 33px;
 }
 
-.svg {
+.eyeopen {
     background-image: url(../eyesvg.svg);
     background-repeat:no-repeat;
     background-position:center;
     vertical-align: super;
+}
+
+.eyeclosed {
+    background-image: url(../closedeye.svg);
+}
+
+.shopCard {
+    display:grid;
+    grid-template-columns: max-content 1fr 1fr;
+}
+
+.cardX {
+    display:grid;
+    justify-content:center;
+    align-content:center;
+}
+#cardX {
+    width:3em;
+    border:none;
+}
+
+.cardCart {
+    background-image: url(../cart.svg);
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:50%;
+}
+
+.cardCart:hover {
+    cursor:pointer;
+    border-radius:25%;
+    background-color: #f0f0f0;
 }

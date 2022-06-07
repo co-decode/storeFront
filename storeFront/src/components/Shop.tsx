@@ -45,11 +45,18 @@ export default function Shop({ offset, limit }: variablesQ) {
                   alt={val.image}
                 />
               </div>
-              <div className="card-body">
+              <div className="card-body shopCard">
                 <p className="card-text">
                   {val.item} <br />
                   <small>${val.price}</small>
                 </p>
+                <div className="cardX">
+                  <div>
+                  <label htmlFor="cardX">x</label>
+                  <input id="cardX" type="number" defaultValue="1"/>
+                  </div>
+                </div>
+                <div className="cardCart"></div>
               </div>
             </div>
           );

@@ -52,6 +52,7 @@ export default function User() {
   const [showChangeForm, setShowChangeForm] = useState(false);
   const [changePass, setChangePass] = useState("");
   const [changePass2, setChangePass2] = useState("");
+  const [showFeedback, setShowFeedback] = useState("none")
   
   const dispatch = useDispatch();
 
@@ -70,6 +71,23 @@ export default function User() {
     }
   },[changeResult])
 
+  useEffect(()=> {
+    const forms = document.querySelectorAll(".changeForm")
+    switch(showFeedback) {
+      case "none":
+        forms.forEach(form=>form.classList.remove("is-valid","is-invalid"))
+        break
+      case "success":
+        forms.forEach(form=>form.classList.add("is-valid"))
+        break
+      case "fail":
+        forms.forEach(form=>form.classList.add("is-invalid"));
+        break
+      default:
+        break
+    }
+  },[showFeedback])
+
   const id = currentUser.id;
   const [historyResult, refreshQuery] = useQuery({
     query: queryOrders,
@@ -86,31 +104,57 @@ export default function User() {
 
   const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (changePass && changePass === changePass2){
-        passwordChange(currentUser.id, changePass)
+    if (changePass && changePass === changePass2 && changePass!==currentUser.password){
+      passwordChange(currentUser.id, changePass)
+      setShowFeedback("success")
     }
+    else if (!changePass || !changePass2 || changePass !== changePass2 || changePass===currentUser.password) {
+      setShowFeedback("fail")
+    }
+  }
+
+  const resetFeedback = () => {
+    setShowFeedback("none")
+  }
+
+  const toggleForm = () => {
+    setShowChangeForm(!showChangeForm)
+    setChangePass("")
+    setChangePass2("")
+    setShowFeedback("none")
   }
 
   return (
     <div className="position-relative">
       You are logged in as {currentUser.username}
       <br />
+      {showFeedback}
       <button className="btn btn-dark" onClick={() => setShowPass(!showPass)}>
         {showPass ? currentUser.password : "View your password"}
       </button>
       <button
         className="btn btn-dark"
-        onClick={() => setShowChangeForm(!showChangeForm)}
+        onClick={toggleForm}
       >
         Change Your Password
       </button>
       {showChangeForm ? (
-        <form onSubmit={(e)=>handleSubmit(e)}>
+        <form className="needs-validation" onSubmit={(e)=>handleSubmit(e)}>
           <label htmlFor="changePass">New Password: </label>
-          <input id="changePass" type="text" onChange={(e)=>setChangePass(e.target.value)}/>
+          <input id="changePass" className="form-control changeForm" type="text" onChange={(e)=>setChangePass(e.target.value)} onFocus={resetFeedback}/>
           <label htmlFor="changePass2">Confirm Password: </label>
-          <input id="changePass2" type="text" onChange={(e)=>setChangePass2(e.target.value)}/>
+          <input id="changePass2" className="form-control changeForm" type="text" onChange={(e)=>setChangePass2(e.target.value)} onFocus={resetFeedback}/>
           <button type="submit">Submit</button>
+          <div className="valid-feedback">
+            {showFeedback === "success" ? "Your password has been changed!"
+            : null}
+          </div>
+          <div className="invalid-feedback">
+            {showFeedback === "fail" && (!changePass || !changePass2) ? "You cannot submit an empty entry"
+            :showFeedback === "fail" && changePass!==changePass2 ? "Passwords are not equal"
+            :showFeedback === "fail" && changePass === currentUser.password ? "This is already your password"
+            :null}
+          </div>
         </form>
       ) : null}
       <h4>Check out your previous purchases:</h4>

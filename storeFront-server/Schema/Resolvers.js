@@ -81,8 +81,6 @@ const resolvers = {
     },
     appendOrder: async (p,args) => {
       const {id, orders} = args;
-      const updates = {};
-      updates.orders = orders;
       const orderUp = await Users.findByIdAndUpdate(id, {$push:{orders}}, {new:true});
       return orderUp;
     },

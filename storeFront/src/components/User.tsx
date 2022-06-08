@@ -157,9 +157,9 @@ export default function User() {
           </div>
         </form>
       ) : null}
-      <h4>Check out your previous purchases:</h4>
+      <h4>Check out your previous purchases: </h4>
       <div>
-        {historyResult.data.getUser.orders.map((val: Order, index: number) => {
+        {Object.assign([],historyResult.data.getUser.orders).reverse().map((val: Order, index: number) => {
           return (
             <div key={val.id}>
               <p>Order {index + 1}</p>

@@ -238,6 +238,12 @@ export default function Login() {
     !viewPass ? eye?.classList.add("eyeclosed") : eye?.classList.remove("eyeclosed")
   }
 
+  const enterSubmit = (e:React.KeyboardEvent<HTMLInputElement>) => {
+    if(e.key === "Enter") {
+      handleSubmit()
+    }
+  }
+
 
   return (
     <div className="position-relative w-25 mx-auto mt-5" id='bob'>
@@ -268,7 +274,7 @@ export default function Login() {
               id="formControlInput1"
               placeholder="username"
               onChange={(e) => handleChangeUser(e)}
-              required
+              onKeyDown={(e)=>enterSubmit(e)}
             />
             <div className="valid-feedback">{login === "EXISTING" ? "This username exists" : "Account created!"}</div>
             <div className="invalid-feedback">
@@ -287,6 +293,7 @@ export default function Login() {
               id="formControlInput2"
               placeholder="password"
               onChange={(e) => handleChangePass(e)}
+              onKeyDown={(e)=>enterSubmit(e)}
             ></input>
             <div className="valid-feedback">{login === "EXISTING" ? "This password is correct!" : null}</div>
             <div className="invalid-feedback">

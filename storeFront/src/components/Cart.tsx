@@ -67,7 +67,7 @@ export default function Cart() {
       <div className="cart-header">
         <h3>Shopping Cart</h3>
         <div className="cart-count">
-          <p>items in cart: {cart.items.length}</p>
+          <p>items in cart: {cart.items[0].item ? cart.items.length : 0}</p>
         </div>
       </div>
       <div className="shopping-cart-container">

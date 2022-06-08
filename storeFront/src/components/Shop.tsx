@@ -41,7 +41,7 @@ export default function Shop({ offset, limit }: variablesQ) {
     variables: { offset, limit },
   });
   const page = useSelector((state: RootState) => state.page.page);
-  const cart = useSelector((state: RootState) => state.cart);
+  const cart = useSelector((state: RootState) => state.cart.cart);
 
   const dispatch = useDispatch();
   const { data, fetching, error } = result;
@@ -57,34 +57,26 @@ export default function Shop({ offset, limit }: variablesQ) {
     const amount: number = parseInt(
       (document.getElementById(amountID) as HTMLInputElement)?.value
     );
-    const orderDetail: CartOrder = Object.assign({}, cart.cart);
+    const orderDetail: CartOrder = Object.assign({}, cart);
 
     orderDetail.date
       ? orderDetail.date
       : (orderDetail.date = new Date(Date.now()).toUTCString());
 
-    const newItem: OrderItems = { item, price, amount, image };
-    cart.cart.items[0].item
-      ? (orderDetail.items = [...cart.cart.items, newItem])
-      : (orderDetail.items = [newItem]);
+    const newItem: OrderItems = { item, amount, price, image };
+    !cart.items[0].item
+      ? (orderDetail.items = [newItem])
+      : cart.items.some(part=>part.item === newItem.item) 
+      ? orderDetail.items = cart.items.
+        map(part=> part.item === newItem.item 
+          ? part = {item: part.item, amount: part.amount + newItem.amount, price, image}
+          : part)
+      : orderDetail.items = [...cart.items, newItem];
 
-    orderDetail.total = cart.cart.total + amount * price;
+    orderDetail.total = cart.total + amount * price;
     console.log(JSON.stringify(orderDetail));
     dispatch(setCart(orderDetail));
   };
-
-  /* 
-  const toastTrigger = document.getElementById('liveToastBtn')
-  const toastLiveExample = document.getElementById('liveToast')
-  if (toastTrigger) {
-    toastTrigger.addEventListener('click', function () {
-      var toast = new bootstrap.Toast(toastLiveExample)
-
-    toast.show()
-  })
-}
- 
-  */
 
   const handleCartClick = (val:OrderItems) => {
     handleCart(

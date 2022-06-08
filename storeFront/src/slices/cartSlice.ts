@@ -20,7 +20,7 @@ export interface CartState {
 }
 
 const initialState: CartState = {
-  cart: {date: "", total: 0, items: [{item:"",image:"",amount:0,price:0}]}
+  cart: {date: "", total: 0, items: [{item:"",amount:0,price:0,image:""}]}
 };
 
 export const cartSlice = createSlice({

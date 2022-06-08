@@ -1,6 +1,7 @@
 import { useQuery } from "urql";
 import { useDispatch, useSelector } from "react-redux";
 import { setPage } from "../slices/pageSlice";
+import { setCart } from "../slices/cartSlice";
 import { RootState } from "../store";
 
 const getItemsQuery = `
@@ -19,21 +20,51 @@ interface variablesQ {
   limit: number;
 }
 
+interface OrderItems {
+  item: string,
+  amount: number,
+  price: number,
+  image:string,
+}
+
+interface CartOrder {
+  date: string,
+  items: OrderItems[],
+  total: number,
+}
+
 export default function Shop({ offset, limit }: variablesQ) {
   const [result, refreshQuery] = useQuery({
     query: getItemsQuery,
     variables: { offset, limit },
   });
   const page = useSelector((state: RootState) => state.page.page);
+  const cart = useSelector((state: RootState) => state.cart);
 
   const dispatch = useDispatch();
   const { data, fetching, error } = result;
   if (fetching) return <p>Loading...</p>;
   if (error) return <p>Something has gone wrong: {error.message}</p>;
 
+  const handleCart = (item:string, price:number, amountID:string, image:string) => {
+    const amount:number = parseInt((document.getElementById(amountID) as HTMLInputElement)?.value)
+    const orderDetail:CartOrder = Object.assign({},cart.cart)
+
+    orderDetail.date ? orderDetail.date : orderDetail.date = new Date(Date.now()).toUTCString();
+
+    const newItem:OrderItems = {item, price, amount, image}
+    cart.cart.items[0].item 
+    ? orderDetail.items = [...cart.cart.items, newItem]
+    : orderDetail.items = [newItem]
+
+    orderDetail.total = cart.cart.total + amount * price;
+    console.log(JSON.stringify(orderDetail))
+    dispatch(setCart(orderDetail))
+  }
+
   return (
     <div className="position-relative">
-      This is the shop
+      This is the shop {JSON.stringify(cart)}
       <div className="row gap-5 justify-content-center">
         {data.getItemsPaged.map((val: any) => {
           return (
@@ -46,17 +77,19 @@ export default function Shop({ offset, limit }: variablesQ) {
                 />
               </div>
               <div className="card-body shopCard">
-                <p className="card-text">
-                  {val.item} <br />
-                  <small>${val.price}</small>
-                </p>
                 <div className="cardX">
-                  <div>
-                  <label htmlFor="cardX">x</label>
-                  <input id="cardX" type="number" defaultValue="1"/>
+                  <div className="card-text cardName">
+                    {val.item}
+                  </div>
+                  <div className="cardXPrice">
+                    <div className="cardPrice">${val.price}</div>
+                    <div >
+                      <label htmlFor={`amount${val.item}`}>x</label>
+                      <input id={`amount${val.item}`} className="cardXinput" type="number" defaultValue="1" min="1"/>
+                    </div>
                   </div>
                 </div>
-                <div className="cardCart"></div>
+                <div className="cardCart" onClick={()=>handleCart(val.item, val.price, `amount${val.item}`, val.image)}></div>
               </div>
             </div>
           );

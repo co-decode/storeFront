@@ -112,7 +112,7 @@ function Nav() {
 
   return (
     
-    <div id="app-wrap" className="container-fluid">
+    <div id="app-wrap" className="container-fluid" style={{padding:0}}>
       <Navbar />
       <Outlet />
     </div>

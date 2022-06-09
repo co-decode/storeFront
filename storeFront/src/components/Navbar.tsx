@@ -7,6 +7,7 @@ export default function Navbar() {
   const currentUser = useSelector(
     (state: RootState) => state.login.currentUser
   );
+  const cart = useSelector((state:RootState) => state.cart.cart)
   const dispatch = useDispatch();
 
   return (
@@ -43,11 +44,20 @@ export default function Navbar() {
                 Shop
               </Link>
             </li>
+            {cart.items[0].item?
             <li className="nav-item">
               <Link className="nav-link" to="/cart">
                 Cart
               </Link>
             </li>
+            : null }
+            {currentUser.id ? (
+              <li className="nav-item">
+                <Link className="nav-link" to="/user">
+                  Profile
+                </Link>
+              </li>
+            ) : null}
             {currentUser.id ? (
               <li className="nav-item">
                 <Link className="nav-link" to="/login"
@@ -63,13 +73,7 @@ export default function Navbar() {
                 </Link>
               </li>
             )}
-            {currentUser.id ? (
-              <li className="nav-item">
-                <Link className="nav-link" to="/user">
-                  User Profile
-                </Link>
-              </li>
-            ) : null}
+            
             {/* <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"

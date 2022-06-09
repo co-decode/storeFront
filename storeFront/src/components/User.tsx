@@ -1,34 +1,51 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "../store";
 import { useSelector, useDispatch } from "react-redux";
-import { useQuery, useMutation} from "urql";
+import { useQuery, useMutation } from "urql";
 import React, { useEffect, useState } from "react";
 import { setCurrentUser } from "../slices/loginSlice";
 
 
+
 const queryOrders = `
-    query($id: ID) {
-        getUser(id: $id) {
-            orders {
-                id
-                date
-                items {
-                  item
-                  amount
-                  price
-                }
-                total
-            }
+  query($id: ID) {
+    getUser(id: $id) {
+      orders {
+        id
+        date
+        items {
+          item
+          amount
+          price
         }
+        total
+      }
     }
+  }
 `;
 
 const ChangePassMut = `
-    mutation($id: ID, $password: String) {
-        updatePass(id: $id, password:$password) {
-            password
+  mutation($id: ID, $password: String) {
+    updatePass(id: $id, password:$password) {
+      password
+    }
+  }`;
+
+const CancelOrder = `
+  mutation($userId: ID, $orderId: ID) {
+    cancelOrder(id1: $userId, id2: $orderId) {
+      orders {
+        id
+        date
+        items {
+          item
+          amount
+          price
         }
-    }`;
+      }
+    }
+  }
+`;
 
 interface Detail {
   item: string;
@@ -52,41 +69,52 @@ export default function User() {
   const [showChangeForm, setShowChangeForm] = useState(false);
   const [changePass, setChangePass] = useState("");
   const [changePass2, setChangePass2] = useState("");
-  const [showFeedback, setShowFeedback] = useState("none")
-  
+  const [showFeedback, setShowFeedback] = useState("none");
+  const [historyOrPass, setHistoryOrPass] = useState("HISTORY");
+
   const dispatch = useDispatch();
 
   const [changeResult, changePassMut] = useMutation(ChangePassMut);
+  const [cancelResult, cancelOrder] = useMutation(CancelOrder);
 
   const navigate = useNavigate();
 
-  if (!currentUser.id) {
-    navigate("/");
-  }
-
-  useEffect(()=>{
-    console.log(JSON.stringify(changeResult))
-    if(changeResult.data) {
-        dispatch(setCurrentUser({id: currentUser.id, username: currentUser.username, password: changeResult.data.updatePass.password})) 
+  useEffect(() => {
+    if (!currentUser.id) {
+      navigate("/");
     }
-  },[changeResult])
+  }, []);
 
-  useEffect(()=> {
-    const forms = document.querySelectorAll(".changeForm")
-    switch(showFeedback) {
+  useEffect(() => {
+    if (changeResult.data) {
+      dispatch(
+        setCurrentUser({
+          id: currentUser.id,
+          username: currentUser.username,
+          password: changeResult.data.updatePass.password,
+        })
+      );
+    }
+  }, [changeResult]);
+
+  useEffect(() => {
+    const forms = document.querySelectorAll(".changeForm");
+    switch (showFeedback) {
       case "none":
-        forms.forEach(form=>form.classList.remove("is-valid","is-invalid"))
-        break
+        forms.forEach((form) =>
+          form.classList.remove("is-valid", "is-invalid")
+        );
+        break;
       case "success":
-        forms.forEach(form=>form.classList.add("is-valid"))
-        break
+        forms.forEach((form) => form.classList.add("is-valid"));
+        break;
       case "fail":
-        forms.forEach(form=>form.classList.add("is-invalid"));
-        break
+        forms.forEach((form) => form.classList.add("is-invalid"));
+        break;
       default:
-        break
+        break;
     }
-  },[showFeedback])
+  }, [showFeedback]);
 
   const id = currentUser.id;
   const [historyResult, refreshQuery] = useQuery({
@@ -96,92 +124,230 @@ export default function User() {
   if (historyResult.fetching) return <div>loading...</div>;
 
   const passwordChange = (id: string, password: string) => {
-      const variables = {id, password};
-      changePassMut(variables).then(result=>{
-          result.error? console.error(result.error) : null
-      })
-  }
+    const variables = { id, password };
+    changePassMut(variables).then((result) => {
+      result.error ? console.error(result.error) : null;
+    });
+  };
 
-  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+  const orderCancellation = (userId: string, orderId: string) => {
+    const variables = { userId, orderId };
+    cancelOrder(variables).then((result) => {
+      result.error ? console.error(result.error) : null;
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (changePass && changePass === changePass2 && changePass!==currentUser.password){
-      passwordChange(currentUser.id, changePass)
-      setShowFeedback("success")
+    if (
+      changePass &&
+      changePass === changePass2 &&
+      changePass !== currentUser.password
+    ) {
+      passwordChange(currentUser.id, changePass);
+      setShowFeedback("success");
+    } else if (
+      !changePass ||
+      !changePass2 ||
+      changePass !== changePass2 ||
+      changePass === currentUser.password
+    ) {
+      setShowFeedback("fail");
     }
-    else if (!changePass || !changePass2 || changePass !== changePass2 || changePass===currentUser.password) {
-      setShowFeedback("fail")
-    }
-  }
+  };
 
   const resetFeedback = () => {
-    setShowFeedback("none")
-  }
+    setShowFeedback("none");
+  };
 
   const toggleForm = () => {
-    setShowChangeForm(!showChangeForm)
-    setChangePass("")
-    setChangePass2("")
-    setShowFeedback("none")
-  }
+    setShowChangeForm(!showChangeForm);
+    setChangePass("");
+    setChangePass2("");
+    setShowFeedback("none");
+  };
+
+  const handleCancel = (orderId: string) => {
+    const userId = currentUser.id;
+    orderCancellation(userId, orderId);
+  };
+
+  const handleToggle = () => {
+    const el = document.getElementById("historyOrPass");
+    if (historyOrPass === "PASSWORD") {
+      el?.classList.add("gearsvg");
+      el?.classList.remove("booksvg");
+      setHistoryOrPass("HISTORY");
+    } else {
+      el?.classList.add("booksvg");
+      el?.classList.remove("gearsvg");
+      setHistoryOrPass("PASSWORD");
+    }
+  };
 
   return (
     <div className="position-relative">
-      You are logged in as {currentUser.username}
-      <br />
-      {showFeedback}
-      <button className="btn btn-dark" onClick={() => setShowPass(!showPass)}>
-        {showPass ? currentUser.password : "View your password"}
-      </button>
-      <button
-        className="btn btn-dark"
-        onClick={toggleForm}
+      <div
+        style={{
+          display: "flex",
+          marginBottom: "20px",
+          width: "400px",
+          justifyContent: "space-between",
+        }}
       >
-        Change Your Password
-      </button>
-      {showChangeForm ? (
-        <form className="needs-validation" onSubmit={(e)=>handleSubmit(e)}>
-          <label htmlFor="changePass">New Password: </label>
-          <input id="changePass" className="form-control changeForm" type="text" onChange={(e)=>setChangePass(e.target.value)} onFocus={resetFeedback}/>
-          <label htmlFor="changePass2">Confirm Password: </label>
-          <input id="changePass2" className="form-control changeForm" type="text" onChange={(e)=>setChangePass2(e.target.value)} onFocus={resetFeedback}/>
-          <button type="submit">Submit</button>
-          <div className="valid-feedback">
-            {showFeedback === "success" ? "Your password has been changed!"
-            : null}
-          </div>
-          <div className="invalid-feedback">
-            {showFeedback === "fail" && (!changePass || !changePass2) ? "You cannot submit an empty entry"
-            :showFeedback === "fail" && changePass!==changePass2 ? "Passwords are not equal"
-            :showFeedback === "fail" && changePass === currentUser.password ? "This is already your password"
-            :null}
-          </div>
-        </form>
-      ) : null}
-      <h4>Check out your previous purchases: </h4>
-      <div>
-        {Object.assign([],historyResult.data.getUser.orders).reverse().map((val: Order, index: number) => {
-          return (
-            <div key={val.id}>
-              <p>Order {index + 1}</p>
-              <div>Order ID: {val.id}</div>
-              <div>Date: {val.date}</div>
-              <ul>
-                Items:
-                {val.items.map((v: Detail) => {
-                  return (
-                    <li key={v.item}>
-                      {v.item}, Amount: {v.amount}, Price: {v.price}
-                    </li>
-                  );
-                })}
-              </ul>
-              <div>Total: {val.total}</div>
-              <hr />
-            </div>
-          );
-        })}
+        <h3 style={{ marginLeft: "40px" }}>Welcome {currentUser.username},</h3>
+        <div
+          id="historyOrPass"
+          className="gearsvg"
+          onClick={handleToggle}
+          role="img"
+          title="Toggle Settings"
+        />
       </div>
-      <Outlet />
+
+      {historyOrPass === "PASSWORD" ? (
+        <>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <button
+              className="btn btn-dark ms-5 me-3"
+              onClick={() => setShowPass(!showPass)}
+              style={{ width: "188px" }}
+            >
+              {showPass ? "Hide Password" : "View Current Password"}
+            </button>
+            {showPass ? (
+              <input
+                type="text"
+                style={{
+                  border: "none",
+                  fontSize: "20px",
+                  textAlign: "center",
+                }}
+                value={currentUser.password}
+                disabled
+              />
+            ) : (
+              <input
+                type="password"
+                style={{
+                  border: "none",
+                  fontSize: "20px",
+                  textAlign: "center",
+                }}
+                value={currentUser.password}
+                disabled
+              />
+            )}
+          </div>
+          <button
+            className="btn btn-dark ms-5 mt-5"
+            style={{ width: "188px" }}
+            onClick={toggleForm}
+          >
+            Change Your Password
+          </button>
+        </>
+      ) : null}
+      {showChangeForm && historyOrPass === "PASSWORD" ? (
+        <>
+          <form
+            className="needs-validation ms-5 mt-4"
+            style={{ width: "400px" }}
+            onSubmit={(e) => handleSubmit(e)}
+          >
+            <label htmlFor="changePass">New Password: </label>
+            <input
+              id="changePass"
+              className="form-control changeForm"
+              type="text"
+              onChange={(e) => setChangePass(e.target.value)}
+              onFocus={resetFeedback}
+            />
+            <label htmlFor="changePass2" className="mt-3">
+              Confirm Password:{" "}
+            </label>
+            <input
+              id="changePass2"
+              className="form-control changeForm"
+              type="text"
+              onChange={(e) => setChangePass2(e.target.value)}
+              onFocus={resetFeedback}
+            />
+            <button className="btn btn-danger mt-3" type="submit">
+              Submit
+            </button>
+            <div className="valid-feedback">
+              {showFeedback === "success"
+                ? "Your password has been changed!"
+                : null}
+            </div>
+            <div className="invalid-feedback">
+              {showFeedback === "fail" && (!changePass || !changePass2)
+                ? "You cannot submit an empty entry"
+                : showFeedback === "fail" && changePass !== changePass2
+                ? "Passwords are not equal"
+                : showFeedback === "fail" && changePass === currentUser.password
+                ? "This is already your password"
+                : null}
+            </div>
+          </form>
+        </>
+      ) : null}
+
+      {historyOrPass === "HISTORY" ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "500px",
+          }}
+        >
+          <h4>Purchase History</h4>
+          <div style={{ marginLeft: "25px", lineHeight: "2em" }}>
+            {Object.assign([], historyResult.data.getUser.orders)
+              .reverse()
+              .map((val: Order) => {
+                return (
+                  <div key={val.id}>
+                    <div>Order ID: {val.id}</div>
+                    <div>Date: {new Date(val.date).toLocaleString()}</div>
+                    {val.items.map((v: Detail) => {
+                      return (
+                        <div key={v.item} className="listDiv">
+                          <div>
+                            x{v.amount} {v.item}{" "}
+                          </div>
+                          <div>Price: {v.price}</div>
+                        </div>
+                      );
+                    })}
+                    <div className="statusDiv">
+                      <div>Total: ${val.total} AUD</div>
+                      <div>
+                        Status: <em>in transit</em>
+                      </div>
+                    </div>
+                    <button
+                      className="btn btn-danger"
+                      style={{
+                        width: "290px",
+                        height: "24px",
+                        padding: 0,
+                        fontSize: "smaller",
+                      }}
+                      tabIndex={-1}
+                      onClick={() => handleCancel(val.id)}
+                    >
+                      Cancel this Order
+                    </button>
+                    <hr style={{ width: "300px" }} />
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

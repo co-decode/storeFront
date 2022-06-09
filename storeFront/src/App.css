@@ -96,6 +96,38 @@
     padding-top:1.5px;
 }
 
+
+.pagination > li > span
+{
+    background-color: white;
+    color: #212529;
+}
+
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+}
+.pagination > li > span:hover
+{
+    cursor:pointer;
+}
+
+.pagination > li.active > span
+{
+    color: white;
+    background-color: #212529 !Important;
+    border: solid 1px #212529 !Important;
+}
+
+.pagination > .active > span:hover
+{
+    background-color: black !Important;
+    border: solid 1px black;
+}
+
 /* Cart */
 .shopping-cart-container {
     height:85vh;
@@ -152,4 +184,40 @@
     display:grid;
     grid-template-columns: 1fr max-content;
     align-items: center;
+}
+
+/* User */
+.listDiv {
+    display:flex;
+    width: 250px;
+    flex-direction:row;
+    justify-content:space-between;
+
+    margin-left: 25px;
+}
+.statusDiv {
+    display: flex;
+    width: 270px;
+    justify-content:space-between;
+}
+
+.booksvg {
+    background-image:url(../book.svg);
+    background-repeat:no-repeat;
+    width:30px;
+    cursor: pointer;
+    background-position:center;
+}
+
+.gearsvg {
+    background-position:center;
+    background-image:url(../gear.svg);
+    background-repeat:no-repeat;
+    width:30px;
+    cursor: pointer;
+}
+
+.gearsvg:hover, .booksvg:hover {
+    background-color: #f0f0f0;
+    border-radius:25%;
 }

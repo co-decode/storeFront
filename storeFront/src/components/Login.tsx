@@ -8,6 +8,7 @@ import {
   setCurrentUser,
   setLogin,
 } from "../slices/loginSlice";
+import { setShopping } from "../slices/cartSlice";
 import { useEffect, useState } from "react";
 
 const CreateAccount = `
@@ -48,6 +49,7 @@ export default function Login() {
     (state: RootState) => state.login.currentUser
   );
   const login = useSelector((state: RootState) => state.login.login);
+  const shopping = useSelector((state:RootState) => state.cart.shopping)
   const [confirmCreate, setConfirmCreate] = useState("none");
   const [failedLogin, setFailedLogin] = useState(false);
   const [userExists, setUserExists] = useState(false)
@@ -86,8 +88,14 @@ export default function Login() {
       if (data.checkLogin) {
         if (data.checkLogin[0]) {
           dispatch(setCurrentUser(data.checkLogin[0]));
+          if (shopping) {
+            dispatch(setShopping(!shopping))
+            navigate("/cart")
+          }
+          else {
           setTimeout(()=>navigate("/user"),300);
           }
+        }
         else setFailedLogin(true)
       }
     }
@@ -275,6 +283,7 @@ export default function Login() {
               placeholder="username"
               onChange={(e) => handleChangeUser(e)}
               onKeyDown={(e)=>enterSubmit(e)}
+              tabIndex={2}
             />
             <div className="valid-feedback">{login === "EXISTING" ? "This username exists" : "Account created!"}</div>
             <div className="invalid-feedback">
@@ -286,7 +295,7 @@ export default function Login() {
             <label htmlFor="formControlInput2" className="form-label">
               Password
             </label>
-            <button className="btn eyeopen eye" style={{display:"inline"}} onClick={handleViewToggle}></button>
+            <button className="btn eyeopen eye" style={{display:"inline"}} onClick={handleViewToggle} tabIndex={4}></button>
             <input
               type={viewPass ? "text" : "password"}
               className="form-control loginInput"
@@ -294,6 +303,7 @@ export default function Login() {
               placeholder="password"
               onChange={(e) => handleChangePass(e)}
               onKeyDown={(e)=>enterSubmit(e)}
+              tabIndex={3}
             ></input>
             <div className="valid-feedback">{login === "EXISTING" ? "This password is correct!" : null}</div>
             <div className="invalid-feedback">
@@ -301,12 +311,12 @@ export default function Login() {
               :passField && login === "CREATE"? null 
               :"Password cannot be empty"}</div>
           </div>
-          <button className="btn btn-dark" onClick={handleSubmit}>
+          <button className="btn btn-dark" onClick={handleSubmit} tabIndex={5}>
             {login === "EXISTING" ? "Login" : "Create Account"}
           </button>
         </div>
       </div>
-      <button className="btn btn-dark mt-2" onClick={handleSwitch}>
+      <button className="btn btn-dark mt-2" onClick={handleSwitch} tabIndex={6}>
         {login === "EXISTING"
           ? "Create a New Account"
           : "Login with an Existing Account"}

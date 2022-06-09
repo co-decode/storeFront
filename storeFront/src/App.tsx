@@ -21,7 +21,7 @@ export default function App() {
         <Route path={`shop`} element={<Shop offset={page} limit={3} />}>
         </Route>
         <Route path="cart" element={<Cart />} />
-        <Route path=":user" element={<User />}>
+        <Route path="user" element={<User />}>
         </Route>
       </Route>
     </Routes>

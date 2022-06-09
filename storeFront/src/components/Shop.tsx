@@ -74,7 +74,6 @@ export default function Shop({ offset, limit }: variablesQ) {
       : orderDetail.items = [...cart.items, newItem];
 
     orderDetail.total = cart.total + amount * price;
-    console.log(JSON.stringify(orderDetail));
     dispatch(setCart(orderDetail));
   };
 
@@ -90,9 +89,9 @@ export default function Shop({ offset, limit }: variablesQ) {
   }
 
   return (
-    <div className="position-relative">
-      This is the shop {JSON.stringify(cart)}
-      <div className="row gap-5 justify-content-center">
+    <div>
+      {/* This is the shop {JSON.stringify(cart)} */}
+      <div className="row gap-5 justify-content-center" style={{width:"100vw"}}>
         {data.getItemsPaged.map((val: any) => {
           return (
             <div

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setCurrentUser } from "../slices/loginSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
@@ -7,8 +7,14 @@ export default function Navbar() {
   const currentUser = useSelector(
     (state: RootState) => state.login.currentUser
   );
-  const cart = useSelector((state:RootState) => state.cart.cart)
+  const cart = useSelector((state: RootState) => state.cart.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(setCurrentUser({id:"",username:"",password:""}))
+    navigate("/login")
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-transparent">
@@ -44,13 +50,13 @@ export default function Navbar() {
                 Shop
               </Link>
             </li>
-            {cart.items[0].item?
-            <li className="nav-item">
-              <Link className="nav-link" to="/cart">
-                Cart
-              </Link>
-            </li>
-            : null }
+            {cart.items[0].item ? (
+              <li className="nav-item">
+                <Link className="nav-link" to="/cart">
+                  Cart
+                </Link>
+              </li>
+            ) : null}
             {currentUser.id ? (
               <li className="nav-item">
                 <Link className="nav-link" to="/user">
@@ -60,11 +66,14 @@ export default function Navbar() {
             ) : null}
             {currentUser.id ? (
               <li className="nav-item">
-                <Link className="nav-link" to="/login"
-                // onClick={()=>dispatch(setCurrentUser({id:"",username:"",password:""}))}
+                <span
+                  className="nav-link hoverPoint"
+                  data-bs-toggle="modal"
+                  data-bs-target="#logoutModal"
+                  // onClick={()=>dispatch(setCurrentUser({id:"",username:"",password:""}))}
                 >
                   Logout
-                </Link>
+                </span>
               </li>
             ) : (
               <li className="nav-item">
@@ -73,7 +82,52 @@ export default function Navbar() {
                 </Link>
               </li>
             )}
-            
+            <div className="cart-modal">
+              <div
+                className="modal fade"
+                id="logoutModal"
+                tabIndex={-1}
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="LogoutLabel">
+                        Confirm Logout
+                      </h5>
+                      <button
+                        type="button"
+                        className="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div className="modal-body">
+                      <p>Are you sure?</p>
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        data-bs-dismiss="modal"
+                        onClick={handleLogout}
+                        >
+                        Confirm
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"

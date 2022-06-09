@@ -152,6 +152,7 @@ export default function Shop({ offset, limit }: variablesQ) {
           })}
         </ul>
       </nav>
+      <button className="btn btn-dark">Go to Cart</button>
       <div className="position-fixed bottom-0 end-0 p-3" style={{ zIndex: 11 }}>
         <div
           id="liveToast"

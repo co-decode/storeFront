@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
 import { useQuery, useMutation } from "urql";
-import { setCart, setShopping } from "../slices/cartSlice";
+import { setCart, setPurchase, setShopping } from "../slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -62,12 +62,11 @@ export default function Cart() {
 
   const [sendResult, sendOrder] = useMutation(SendOrder);
 
-
-  useEffect(()=> {
+  useEffect(() => {
     if (!cart.items[0].item) {
-      navigate('/shop')
+      navigate("/shop");
     }
-  },[cart.items[0].item])
+  }, [cart.items[0].item]);
 
   const confirmOrder = (id: string, orders: CartOrder) => {
     const variables = { id, orders };
@@ -77,12 +76,14 @@ export default function Cart() {
   };
 
   const handlePurchase = () => {
-    const { date, total } = cart;
+    const { total } = cart;
     const newItems = cart.items.map(
       (obj: FinalisedItems) =>
         (obj = { item: obj.item, amount: obj.amount, price: obj.price })
     );
-    const order = { date, items: newItems, total };
+    const timestamp = new Date(Date.now()).toJSON()
+
+    const order = { date: timestamp, items: newItems, total };
     confirmOrder(currentUser.id, order);
     dispatch(
       setCart({
@@ -91,10 +92,11 @@ export default function Cart() {
         items: [{ item: "", image: "", amount: 0, price: 0 }],
       })
     );
-    navigate('/user')
+    dispatch(setPurchase(true))
+    navigate("/user");
   };
 
-  const handleQty = (qty:number, item:string) => {
+  const handleQty = (qty: number, item: string) => {
     const orderDetail: CartOrderWImage = Object.assign({}, cart);
 
     orderDetail.items = cart.items.map((part) =>
@@ -109,99 +111,115 @@ export default function Cart() {
     );
 
     orderDetail.total = orderDetail.items.reduce(
-      (acc:number, val) => (acc += val.amount * val.price), 0
+      (acc: number, val) => (acc += val.amount * val.price),
+      0
     );
     dispatch(setCart(orderDetail));
   };
 
-  const handleRemove = (item:string) => {
+  const handleRemove = (item: string) => {
     const orderDetail: CartOrderWImage = Object.assign({}, cart);
     if (orderDetail.items.length >= 2) {
-      orderDetail.items = cart.items.filter((part) =>
-        part.item !== item
-      );
-    }
-    else if (orderDetail.items[0].item) {
-      orderDetail.items = orderDetail.items.map(v=>{ return({item:"",amount:0,price:0,image:""})})
+      orderDetail.items = cart.items.filter((part) => part.item !== item);
+    } else if (orderDetail.items[0].item) {
+      orderDetail.items = orderDetail.items.map((v) => {
+        return { item: "", amount: 0, price: 0, image: "" };
+      });
       navigate("/shop");
     }
     orderDetail.total = orderDetail.items.reduce(
-      (acc:number, val) => (acc += val.amount * val.price), 0
+      (acc: number, val) => (acc += val.amount * val.price),
+      0
     );
-    dispatch(setCart(orderDetail))
-  }
+    dispatch(setCart(orderDetail));
+  };
 
-  const handleRedirect = ()=> {
-    dispatch(setShopping(true))
-    navigate('/login')
+  const handleRedirect = () => {
+    dispatch(setShopping(true));
+    navigate("/login");
+  };
+
+  const backToShop = () => {
+    navigate("/shop")
   }
 
   return (
-    <div className="container-fluid">
-      {JSON.stringify(cart)}
+    <div className="container-fluid mt-1">
       <div className="cart-header">
-        <h3>Shopping Cart</h3>
+        <h3 className="ms-4">Shopping Cart</h3>
         <div className="cart-count">
-          <p>items in cart: {cart.items[0].item ? cart.items.length : 0}</p>
+          <p className="me-5">
+            Items in cart: {cart.items[0].item ? cart.items.length : 0}(
+            {cart.items[0].item
+              ? cart.items.reduce((acc, val) => (acc += val.amount), 0)
+              : 0}
+            )
+          </p>
         </div>
       </div>
       <div className="shopping-cart-container">
         <hr />
-        {cart.items[0].item ? cart.items.map((item) => {
-          return (
-            <div key={`cart${item.item}`}>
-              <div  className="cart-item">
-                <div className="item-image">
-                  <img
-                    src={`../../src/assets/${item.image}.jpg`}
-                    alt={item.image}
-                  />
-                </div>
-                <div className="item-center">
-                  <h2 className="item-name">{item.item}</h2>
-                  <div className="item-qty">
-                    Quantity:{" "}
-                    <input
-                      type="number"
-                      min="1"
-                      defaultValue={item.amount}
-                      style={{ width: "3em", border: "none" }}
-                      onChange={(e) => handleQty(parseInt(e.target.value), item.item)}
-                    />{" "}
-                    Subtotal: ${item.price * item.amount}
+        {cart.items[0].item
+          ? cart.items.map((item) => {
+              return (
+                <div key={`cart${item.item}`}>
+                  <div className="cart-item">
+                    <div className="item-image">
+                      <img
+                        src={`../../src/assets/${item.image}.jpg`}
+                        alt={item.image}
+                      />
+                    </div>
+                    <div className="item-center">
+                      <h2 className="item-name">{item.item}</h2>
+                      <div className="item-qty">
+                        Quantity:{" "}
+                        <input
+                          type="number"
+                          min="1"
+                          defaultValue={item.amount}
+                          style={{ width: "3em", border: "none" }}
+                          onChange={(e) =>
+                            handleQty(parseInt(e.target.value), item.item)
+                          }
+                        />{" "}
+                        Subtotal: ${item.price * item.amount}
+                      </div>
+                      <button
+                        className="btn btn-dark mt-5"
+                        style={{ fontSize: "smaller" }}
+                        onClick={() => handleRemove(item.item)}
+                      >
+                        Remove from Cart
+                      </button>
+                    </div>
+                    <div className="item-price">Price: ${item.price}</div>
                   </div>
-                  <button
-                    className="btn btn-dark"
-                    style={{ fontSize: "smaller"}}
-                    onClick={()=>handleRemove(item.item)}
-                  >
-                    Remove from Cart
-                  </button>
+                  <hr />
                 </div>
-                <div className="item-price">Price: ${item.price}</div>
-              </div>
-              <hr />
-            </div>
-          );
-        }): null}
+              );
+            })
+          : null}
         <div className="cart-footer">
-        {currentUser.id ? 
-
-          <button
-            className="btn btn-dark checkout-button"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
-            Checkout
-          </button>
-          :
-          <button
-            className="btn btn-dark checkout-button"
-            onClick={handleRedirect}
-          >
-            Checkout
-          </button>
-        }
+            <button className="btn btn-dark" style={{width:"max-content"}} onClick={backToShop}>
+              Back to Shop
+            </button>
+          {currentUser.id ? (
+            <button
+              className="btn btn-dark checkout-button"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              Checkout
+            </button>
+          ) : (
+            <button
+              className="btn btn-dark checkout-button"
+              onClick={handleRedirect}
+            >
+              Checkout
+            </button>
+          )}
           <div className="footer-total">
             <div>Total: ${cart.total}</div>
           </div>
@@ -229,22 +247,59 @@ export default function Cart() {
                 ></button>
               </div>
               <div className="modal-body">
-                <h3>Receipt Total:</h3>
-                <small>${cart.total}</small>
-                <h3>Payment Information</h3>
-                <ul>
-                  <li>Name on Card</li>
-                  <li>Credit Card Number</li>
-                  <li>Expires On</li>
-                  <li>CVC</li>
-                </ul>
-                <h3>Shipping Information</h3>
-                <select>
-                  <option>Normal</option>
-                </select>
-                <p>
-                  Estimated time of arrival: <code>never</code>
-                </p>
+                <h4 className="mb-3">Receipt Total:</h4>
+                <strong className="ms-3">${cart.total} AUD</strong>
+                <h4 className="mt-2">Payment Information</h4>
+                <form className="creditInfo mb-2">
+                  <label htmlFor="credit1">Name on Card</label>
+                  <input
+                    id="credit1"
+                    style={{ gridRow: "2/3", gridColumn: "1 / 3" }}
+                    type="text"
+                    disabled
+                  />
+                  <label htmlFor="credit2" style={{ gridRow: "3/4" }}>
+                    Credit Card Number
+                  </label>
+                  <input
+                    id="credit2"
+                    style={{ gridRow: "4/5", gridColumn: "1 / 3" }}
+                    type="text"
+                    disabled
+                  />
+                  <label htmlFor="credit3" style={{ gridRow: "5/6" }}>
+                    Expires On
+                  </label>
+                  <input
+                    id="credit3"
+                    style={{ gridRow: "6/7", gridColumn: "1 / 2" }}
+                    type="text"
+                    disabled
+                  />
+                  <input
+                    id="credit3.1"
+                    style={{ gridRow: "6/7", gridColumn: "2 / 3" }}
+                    type="text"
+                    disabled
+                  />
+                  <label htmlFor="credit4" style={{ gridRow: "7/8" }}>
+                    CVC
+                  </label>
+                  <input id="credit4" type="text" style={{ gridRow: "8/9" }} disabled />
+                </form>
+                <h4>Shipping Information <small><sup>Free Shipping!</sup></small></h4>
+                <div style={{ display: "flex", alignItems: "center"}}>
+                  <select className="btn btn-dark m-2">
+                    <option>Normal</option>
+                    <option>Express</option>
+                  </select>
+                  <div className="ms-3">
+                    Estimated time of arrival:{" "}
+                    <samp className="ms-1">
+                      <strong>never</strong>
+                    </samp>
+                  </div>
+                </div>
               </div>
               <div className="modal-footer">
                 <button

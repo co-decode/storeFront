@@ -93,7 +93,7 @@ export default function Login() {
             navigate("/cart")
           }
           else {
-          setTimeout(()=>navigate("/user"),300);
+          setTimeout(()=>{navigate("/user");dispatch(setLogin("EXISTING"))},300);
           }
         }
         else setFailedLogin(true)
@@ -147,7 +147,7 @@ export default function Login() {
   useEffect(() => {
     if(userExists) {
       const userfield = document.querySelector("#formControlInput1")
-        login === "EXISTING" 
+        login === "EXISTING"
         ? userfield!.classList.add("is-valid")
         : userfield!.classList.add("is-invalid")
     }
@@ -163,12 +163,6 @@ export default function Login() {
     dispatch(setUser(""))
     dispatch(setPass(""))
   },[])
-
-  // useEffect(() => {
-  //   if(currentUser.username && currentUser.username !== "FAILED"){
-  //     const passfield = document.querySelector("#formControlInput2")
-  //     passfield!.classList.add("is-valid")}
-  // }, [currentUser.username])
 
   useEffect(() => {
     const forms = document.querySelectorAll(".loginInput")
@@ -191,13 +185,14 @@ export default function Login() {
   }, [login])
 
   // if (fetching) return <p>Loading...</p>;
-  // if (error) return <p>Something has gone wrong: {error.message}</p>;
+  if (error) return <p>Something has gone wrong: {error.message}</p>;
 
   const createUser = (username: string, password: string) => {
     const variables = { username, password };
-    createAccount(variables).then((result) =>
-      result.error ? console.error(result.error) : console.log(result)
-    );
+    createAccount(variables).then((result) => {
+      if(result.error) console.error(result.error);
+      else {refreshQuery()}
+  });
   };
 
   const handleChangeUser = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -224,7 +219,8 @@ export default function Login() {
     } 
     else if (login === "CREATE") {
         if (userField && passField){
-          createUser(userField, passField);
+          createUser(userField, passField)
+          // dispatch(setLogin("EXISTING"))
         }
         else if (!userField || !passField) {
           setConfirmCreate("fail")
@@ -254,19 +250,7 @@ export default function Login() {
 
 
   return (
-    <div className="position-relative w-25 mx-auto mt-5" id='bob'>
-      {confirmCreate === "success" 
-      ? `${createUserResult.data.createUser.username} has been successfully created!`
-      : null}
-      <br />
-      {/* {JSON.stringify(currentUser)} {userField} */}
-      {/* {failedLogin.toString()} */}
-      {/* {userExists.toString()} */}
-      {/* {JSON.stringify(createUserResult)} */}
-      {/* {confirmCreate.toString()} */}
-      <br />
-      {/* {JSON.stringify(userExists)} */}
-      {/* {JSON.stringify(existResult.data)} */}
+    <div className="position-relative w-25 mx-auto mt-5">
       <div className="card">
         <h5 className="card-header">
           {login === "EXISTING" ? "Login to an Existing Account" : "Create an Account"}
@@ -321,6 +305,9 @@ export default function Login() {
           ? "Create a New Account"
           : "Login with an Existing Account"}
       </button>
+      {/* {confirmCreate === "success" 
+      ? `${createUserResult.data.createUser.username} has been Successfully Created!`
+      : null} */}
     </div>
   );
 }

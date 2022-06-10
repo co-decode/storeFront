@@ -4,8 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useQuery, useMutation } from "urql";
 import React, { useEffect, useState } from "react";
 import { setCurrentUser } from "../slices/loginSlice";
+import { setPurchase } from "../slices/cartSlice";
 
-
+declare var bootstrap: any;
 
 const queryOrders = `
   query($id: ID) {
@@ -65,6 +66,7 @@ export default function User() {
   const currentUser = useSelector(
     (state: RootState) => state.login.currentUser
   );
+  const purchase = useSelector((state: RootState) => state.cart.purchase);
   const [showPass, setShowPass] = useState(false);
   const [showChangeForm, setShowChangeForm] = useState(false);
   const [changePass, setChangePass] = useState("");
@@ -116,12 +118,24 @@ export default function User() {
     }
   }, [showFeedback]);
 
+  const thankYou = () => {
+    const toastPurchase = document.getElementById("purchaseToast");
+    new bootstrap.Toast(toastPurchase).show();
+    dispatch(setPurchase(false));
+  };
+
+  useEffect(() => {
+    if (purchase) {
+      thankYou();
+    }
+  }, [purchase]);
+
   const id = currentUser.id;
   const [historyResult, refreshQuery] = useQuery({
     query: queryOrders,
     variables: { id: id },
   });
-  if (historyResult.fetching) return <div>loading...</div>;
+  // if (historyResult.fetching) return <div>loading...</div>;
 
   const passwordChange = (id: string, password: string) => {
     const variables = { id, password };
@@ -186,16 +200,21 @@ export default function User() {
   };
 
   return (
-    <div className="position-relative">
+    <div
+      className="position-relative"
+      style={{ display: "grid", justifyContent: "center" }}
+    >
       <div
         style={{
           display: "flex",
           marginBottom: "20px",
+          marginLeft:"auto",
+          marginRight:"auto",
           width: "400px",
           justifyContent: "space-between",
         }}
       >
-        <h3 style={{ marginLeft: "40px" }}>Welcome {currentUser.username},</h3>
+        <h3>Welcome {currentUser.username},</h3>
         <div
           id="historyOrPass"
           className="gearsvg"
@@ -207,9 +226,9 @@ export default function User() {
 
       {historyOrPass === "PASSWORD" ? (
         <>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", width:"500px" }}>
             <button
-              className="btn btn-dark ms-5 me-3"
+              className="btn btn-dark ms-4 me-3"
               onClick={() => setShowPass(!showPass)}
               style={{ width: "188px" }}
             >
@@ -240,7 +259,7 @@ export default function User() {
             )}
           </div>
           <button
-            className="btn btn-dark ms-5 mt-5"
+            className="btn btn-dark ms-4 mt-5"
             style={{ width: "188px" }}
             onClick={toggleForm}
           >
@@ -304,50 +323,89 @@ export default function User() {
           }}
         >
           <h4>Purchase History</h4>
-          <div style={{ marginLeft: "25px", lineHeight: "2em" }}>
-            {Object.assign([], historyResult.data.getUser.orders)
-              .reverse()
-              .map((val: Order) => {
-                return (
-                  <div key={val.id}>
-                    <div>Order ID: {val.id}</div>
-                    <div>Date: {new Date(val.date).toLocaleString()}</div>
-                    {val.items.map((v: Detail) => {
-                      return (
-                        <div key={v.item} className="listDiv">
-                          <div>
-                            x{v.amount} {v.item}{" "}
+          {!historyResult.fetching && historyResult.data.getUser.orders[0]  ? (
+            <div style={{ marginLeft: "25px", lineHeight: "2em" }}>
+              {Object.assign([], historyResult.data.getUser.orders)
+                .reverse()
+                .map((val: Order) => {
+                  return (
+                    <div key={val.id}>
+                      <div>Order ID: {val.id}</div>
+                      <div>Date: {new Date(val.date).toLocaleString()}</div>
+                      {val.items.map((v: Detail) => {
+                        return (
+                          <div key={v.item} className="listDiv">
+                            <div>
+                              x{v.amount} {v.item}{" "}
+                            </div>
+                            <div>Price: {v.price}</div>
                           </div>
-                          <div>Price: {v.price}</div>
+                        );
+                      })}
+                      <div className="statusDiv">
+                        <div>Total: ${val.total} AUD</div>
+                        <div>
+                          Status: <em>not shipped</em>
                         </div>
-                      );
-                    })}
-                    <div className="statusDiv">
-                      <div>Total: ${val.total} AUD</div>
-                      <div>
-                        Status: <em>in transit</em>
                       </div>
+                      <button
+                        className="btn btn-danger"
+                        style={{
+                          width: "290px",
+                          height: "24px",
+                          padding: 0,
+                          fontSize: "smaller",
+                        }}
+                        tabIndex={-1}
+                        onClick={() => handleCancel(val.id)}
+                      >
+                        Cancel this Order
+                      </button>
+                      <hr style={{ width: "300px" }} />
                     </div>
-                    <button
-                      className="btn btn-danger"
-                      style={{
-                        width: "290px",
-                        height: "24px",
-                        padding: 0,
-                        fontSize: "smaller",
-                      }}
-                      tabIndex={-1}
-                      onClick={() => handleCancel(val.id)}
-                    >
-                      Cancel this Order
-                    </button>
-                    <hr style={{ width: "300px" }} />
-                  </div>
-                );
-              })}
-          </div>
+                  );
+                })}
+            </div>
+          ) : !historyResult.fetching && !historyResult.data.getUser.orders[0] ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
+              <div className="m-5">----- There's nothing here! -----</div>
+              <button
+                className="btn btn-dark"
+                onClick={() => navigate("/shop")}
+              >
+                Go to Shop
+              </button>
+            </div>
+          ) : (<div>...Loading...</div>)}
         </div>
       ) : null}
+
+      <div
+        className="position-fixed top-25 end-50 p-3"
+        style={{ zIndex: 11, transform: "translate(50%, 50%)" }}
+      >
+        <div
+          id="purchaseToast"
+          className="toast bg-dark border-0 text-white zambini"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          <div className="toast-body">Thank you for your purchase!</div>
+          <button
+            type="button"
+            className="btn-close bg-light me-3"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
     </div>
   );
 }

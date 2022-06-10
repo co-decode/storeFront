@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPage } from "../slices/pageSlice";
 import { setCart } from "../slices/cartSlice";
 import { RootState } from "../store";
+import { useNavigate } from "react-router-dom";
 
 const getItemsQuery = `
 query ($offset: Int, $limit: Int) {
@@ -42,10 +43,9 @@ export default function Shop({ offset, limit }: variablesQ) {
   });
   const page = useSelector((state: RootState) => state.page.page);
   const cart = useSelector((state: RootState) => state.cart.cart);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data, fetching, error } = result;
-  if (fetching) return <p>Loading...</p>;
   if (error) return <p>Something has gone wrong: {error.message}</p>;
 
   const handleCart = (
@@ -58,10 +58,6 @@ export default function Shop({ offset, limit }: variablesQ) {
       (document.getElementById(amountID) as HTMLInputElement)?.value
     );
     const orderDetail: CartOrder = Object.assign({}, cart);
-
-    orderDetail.date
-      ? orderDetail.date
-      : (orderDetail.date = new Date(Date.now()).toUTCString());
 
     const newItem: OrderItems = { item, amount, price, image };
     !cart.items[0].item
@@ -78,21 +74,26 @@ export default function Shop({ offset, limit }: variablesQ) {
   };
 
   const handleCartClick = (val:OrderItems) => {
-    handleCart(
-      val.item,
-      val.price,
-      `amount${val.item}`,
-      val.image
-    );
-    const toastLiveExample = document.getElementById('liveToast')
-    new bootstrap.Toast(toastLiveExample).show()
+    if (!fetching){
+      handleCart(
+        val.item,
+        val.price,
+        `amount${val.item}`,
+        val.image
+      );
+      const toastLive = document.getElementById('liveToast')
+      new bootstrap.Toast(toastLive).show()
+  }}
+
+  const handleGo = () => {
+    navigate("/cart")
   }
 
   return (
     <div>
       {/* This is the shop {JSON.stringify(cart)} */}
-      <div className="row gap-5 justify-content-center" style={{width:"100vw"}}>
-        {data.getItemsPaged.map((val: any) => {
+      <div className="row gap-5 justify-content-center mt-2" style={{width:"100vw"}}>
+        {(fetching ? [{item:"loading...", image:"blank", price:0}] : data.getItemsPaged).map((val: any) => {
           return (
             <div
               key={val.item}
@@ -132,7 +133,7 @@ export default function Shop({ offset, limit }: variablesQ) {
           );
         })}
       </div>
-      <nav aria-label="Item Pages">
+      <nav aria-label="Item Pages" className="shopNav">
         <ul className="pagination pagination-lg justify-content-center mt-4">
           {[0, 1, 2, 3, 4, 5].map((val) => {
             return (
@@ -151,8 +152,10 @@ export default function Shop({ offset, limit }: variablesQ) {
             );
           })}
         </ul>
+      {cart.items[0].item
+      ?<button className="btn btn-dark" onClick={handleGo}>Go to Cart</button>
+      :null}
       </nav>
-      <button className="btn btn-dark">Go to Cart</button>
       <div className="position-fixed bottom-0 end-0 p-3" style={{ zIndex: 11 }}>
         <div
           id="liveToast"

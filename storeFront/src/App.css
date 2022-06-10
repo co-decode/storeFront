@@ -51,7 +51,11 @@
 .eyeclosed {
     background-image: url(../closedeye.svg);
 }
-
+/* 
+.loginCard {
+    width: 90vw;
+}
+ */
 /* Shop */
 
 .shopCard {
@@ -238,4 +242,14 @@
 
 .hoverPoint:hover {
     cursor: pointer;
+}
+
+/* Responsiveness */
+/* Mobile */
+
+@media (max-width: 576px) {
+    .mobileInvis {
+        visibility: hidden;
+        position:absolute;
+    }
 }

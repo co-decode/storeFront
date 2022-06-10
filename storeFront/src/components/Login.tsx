@@ -250,10 +250,10 @@ export default function Login() {
 
 
   return (
-    <div className="position-relative w-25 mx-auto mt-5">
-      <div className="card">
+    <div className="position-relative mx-1 mt-4">
+      <div className="card loginCard">
         <h5 className="card-header">
-          {login === "EXISTING" ? "Login to an Existing Account" : "Create an Account"}
+          {login === "EXISTING" ? "Existing Account" : "Create an Account"}
         </h5>
         <div className="card-body">
           <div className="mb-33">
@@ -305,9 +305,6 @@ export default function Login() {
           ? "Create a New Account"
           : "Login with an Existing Account"}
       </button>
-      {/* {confirmCreate === "success" 
-      ? `${createUserResult.data.createUser.username} has been Successfully Created!`
-      : null} */}
     </div>
   );
 }

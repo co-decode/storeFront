@@ -141,7 +141,7 @@
 }
 
 .shopNav {
-
+  z-index:12;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -202,7 +202,7 @@
   align-content: center;
 }
 
-.zambini {
+.shopToast {
   display: grid;
   grid-template-columns: 1fr max-content;
   align-items: center;
@@ -268,6 +268,7 @@
 
 .profileTitle {
   display: flex;
+  position:relative;
   margin-bottom: 20px;
   margin-left:auto;
   margin-right:auto;
@@ -291,6 +292,10 @@
 .changePassForm {
   width:400px;
   margin-top:20px;
+}
+
+.purchaseToastContainer {
+  bottom: 0;
 }
 
 /* Responsiveness */
@@ -318,9 +323,16 @@
     }
 
   .item-displayer {
-      margin-bottom:50px;
+      margin-bottom:80px;
       margin-left:0;
       margin-right:0;
+  }
+  #liveToast {
+    width:max-content;
+    margin-bottom:35px;
+  }
+  .shopToastBody {
+    width: max-content;
   }
   /* cart */
   .cartRemove {
@@ -350,6 +362,13 @@
   .changePassForm {
     margin-top: 20px;
   }
+  #purchaseToast {
+    width: max-content;
+  }
+  .purchaseToastContainer {
+    top:40px;
+    left:-10px;
+  }
 }
 
 @media (min-width:576px) {
@@ -363,9 +382,7 @@
   .subContainer {
     max-width: 450px;
     margin:auto;
-  }
-
-  
+  }  
 }
 
 #navbarNavDropdown > ul {

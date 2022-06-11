@@ -282,7 +282,7 @@ export default function Cart() {
                     type="text"
                     disabled
                   />
-                  <label htmlFor="credit2" style={{ gridRow: "3/4" }}>
+                  <label htmlFor="credit2" style={{ gridRow: "3/4", gridColumn:"1 / 3"}}>
                     Credit Card Number
                   </label>
                   <input

@@ -197,12 +197,12 @@ export default function Shop({ offset, limit }: variablesQ) {
       <div className="position-fixed bottom-0 end-0 p-3" style={{ zIndex: 11 }}>
         <div
           id="liveToast"
-          className="toast bg-dark border-0 text-white zambini"
+          className="toast bg-dark border-0 text-white shopToast"
           role="alert"
           aria-live="assertive"
           aria-atomic="true"
         >
-          <div className="toast-body">Item added to Shopping Cart</div>
+          <div className="toast-body shopToastBody">Item added to Shopping Cart</div>
           <button
             type="button"
             className="btn-close bg-light me-3"

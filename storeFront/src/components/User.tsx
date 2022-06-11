@@ -215,6 +215,26 @@ export default function User() {
           role="img"
           title="Toggle Settings"
         />
+        <div
+        className="position-fixed p-3 purchaseToastContainer"
+        style={{ zIndex: 11 }}
+      >
+        <div
+          id="purchaseToast"
+          className="toast bg-success border-0 text-white shopToast"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          <div className="toast-body">Thank you for your purchase!</div>
+          <button
+            type="button"
+            className="btn-close bg-light me-3"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>  
       </div>
 
       {historyOrPass === "PASSWORD" ? (
@@ -360,7 +380,7 @@ export default function User() {
                 flexDirection: "column",
               }}
             >
-              <div className="m-5">----- There's nothing here! -----</div>
+              <div className="m-5">--- There's nothing here! ---</div>
               <button
                 className="btn btn-dark"
                 onClick={() => navigate("/shop")}
@@ -372,26 +392,8 @@ export default function User() {
         </div>
       ) : null}
 
-      <div
-        className="position-fixed top-25 end-50 p-3"
-        style={{ zIndex: 11, transform: "translate(50%, 50%)" }}
-      >
-        <div
-          id="purchaseToast"
-          className="toast bg-dark border-0 text-white zambini"
-          role="alert"
-          aria-live="assertive"
-          aria-atomic="true"
-        >
-          <div className="toast-body">Thank you for your purchase!</div>
-          <button
-            type="button"
-            className="btn-close bg-light me-3"
-            data-bs-dismiss="toast"
-            aria-label="Close"
-          ></button>
-        </div>
-      </div>
+      
+      <button onClick={thankYou} ></button>
     </div>
   );
 }

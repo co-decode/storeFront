@@ -201,18 +201,11 @@ export default function User() {
 
   return (
     <div
-      className="position-relative"
+      className="profileDisplay"
       style={{ display: "grid", justifyContent: "center" }}
     >
-      <div
-        style={{
-          display: "flex",
-          marginBottom: "20px",
-          marginLeft:"auto",
-          marginRight:"auto",
-          width: "400px",
-          justifyContent: "space-between",
-        }}
+      <div 
+        className="profileTitle respondWidth-sm"
       >
         <h3>Welcome {currentUser.username},</h3>
         <div
@@ -226,13 +219,13 @@ export default function User() {
 
       {historyOrPass === "PASSWORD" ? (
         <>
-          <div style={{ display: "flex", alignItems: "center", width:"500px" }}>
+          <div className="userViewPass">
             <button
-              className="btn btn-dark ms-4 me-3"
+              className="btn btn-dark me-3"
               onClick={() => setShowPass(!showPass)}
               style={{ width: "188px" }}
             >
-              {showPass ? "Hide Password" : "View Current Password"}
+              {showPass ? "Hide Password" : "View Password"}
             </button>
             {showPass ? (
               <input
@@ -259,7 +252,7 @@ export default function User() {
             )}
           </div>
           <button
-            className="btn btn-dark ms-4 mt-5"
+            className="btn btn-dark mt-5"
             style={{ width: "188px" }}
             onClick={toggleForm}
           >
@@ -270,8 +263,7 @@ export default function User() {
       {showChangeForm && historyOrPass === "PASSWORD" ? (
         <>
           <form
-            className="needs-validation ms-5 mt-4"
-            style={{ width: "400px" }}
+            className="changePassForm needs-validation respondWidth-sm"
             onSubmit={(e) => handleSubmit(e)}
           >
             <label htmlFor="changePass">New Password: </label>
@@ -314,17 +306,11 @@ export default function User() {
       ) : null}
 
       {historyOrPass === "HISTORY" ? (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            width: "500px",
-          }}
+        <div className="userHistory respondWidth-sm"
         >
           <h4>Purchase History</h4>
           {!historyResult.fetching && historyResult.data.getUser.orders[0]  ? (
-            <div style={{ marginLeft: "25px", lineHeight: "2em" }}>
+            <div style={{ marginLeft: "0", lineHeight: "2em" }}>
               {Object.assign([], historyResult.data.getUser.orders)
                 .reverse()
                 .map((val: Order) => {
@@ -351,7 +337,7 @@ export default function User() {
                       <button
                         className="btn btn-danger"
                         style={{
-                          width: "290px",
+                          width: "300px",
                           height: "24px",
                           padding: 0,
                           fontSize: "smaller",

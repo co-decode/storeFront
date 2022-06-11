@@ -250,7 +250,8 @@ export default function Login() {
 
 
   return (
-    <div className="position-relative mx-1 mt-4">
+    <div className="mx-1 mt-4 loginContainer">
+      <div className="subContainer">
       <div className="card loginCard">
         <h5 className="card-header">
           {login === "EXISTING" ? "Existing Account" : "Create an Account"}
@@ -300,11 +301,12 @@ export default function Login() {
           </button>
         </div>
       </div>
-      <button className="btn btn-dark mt-2" onClick={handleSwitch} tabIndex={6}>
+      <button className="btn btn-dark mt-2 loginSwitch" onClick={handleSwitch} tabIndex={6}>
         {login === "EXISTING"
           ? "Create a New Account"
           : "Login with an Existing Account"}
       </button>
+      </div>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { setPage } from "../slices/pageSlice";
 import { setCart } from "../slices/cartSlice";
 import { RootState } from "../store";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const getItemsQuery = `
 query ($offset: Int, $limit: Int) {
@@ -48,6 +49,33 @@ export default function Shop({ offset, limit }: variablesQ) {
   const { data, fetching, error } = result;
   if (error) return <p>Something has gone wrong: {error.message}</p>;
 
+  useEffect(() => {
+    function watchWidth() {
+      if (window.innerWidth <= 576) {
+        document
+          .querySelector(".pagination")
+          ?.classList.remove("pagination-lg", "mt-4");
+        document.querySelector(".navButt")?.classList.remove("mb-1");
+      } else if (window.innerWidth > 576) {
+        if (
+          !document
+            .querySelector(".pagination")
+            ?.classList.contains("pagination-lg")
+        ) {
+          document
+            .querySelector(".pagination")
+            ?.classList.add("pagination-lg", "mt-4");
+          document.querySelector(".navButt")?.classList.add("mb-1");
+        }
+      }
+    }
+    watchWidth();
+    window.addEventListener("resize", watchWidth);
+    return () => {
+      window.removeEventListener("resize", watchWidth);
+    };
+  }, []);
+
   const handleCart = (
     item: string,
     price: number,
@@ -62,38 +90,46 @@ export default function Shop({ offset, limit }: variablesQ) {
     const newItem: OrderItems = { item, amount, price, image };
     !cart.items[0].item
       ? (orderDetail.items = [newItem])
-      : cart.items.some(part=>part.item === newItem.item) 
-      ? orderDetail.items = cart.items.
-        map(part=> part.item === newItem.item 
-          ? part = {item: part.item, amount: part.amount + newItem.amount, price, image}
-          : part)
-      : orderDetail.items = [...cart.items, newItem];
+      : cart.items.some((part) => part.item === newItem.item)
+      ? (orderDetail.items = cart.items.map((part) =>
+          part.item === newItem.item
+            ? (part = {
+                item: part.item,
+                amount: part.amount + newItem.amount,
+                price,
+                image,
+              })
+            : part
+        ))
+      : (orderDetail.items = [...cart.items, newItem]);
 
     orderDetail.total = cart.total + amount * price;
     dispatch(setCart(orderDetail));
   };
 
-  const handleCartClick = (val:OrderItems) => {
-    if (!fetching){
-      handleCart(
-        val.item,
-        val.price,
-        `amount${val.item}`,
-        val.image
-      );
-      const toastLive = document.getElementById('liveToast')
-      new bootstrap.Toast(toastLive).show()
-  }}
+  const handleCartClick = (val: OrderItems) => {
+    if (!fetching) {
+      handleCart(val.item, val.price, `amount${val.item}`, val.image);
+      const toastLive = document.getElementById("liveToast");
+      new bootstrap.Toast(toastLive).show();
+    }
+  };
 
   const handleGo = () => {
-    navigate("/cart")
-  }
+    navigate("/cart");
+  };
 
   return (
     <div>
       {/* This is the shop {JSON.stringify(cart)} */}
-      <div className="row gap-5 justify-content-center mt-2" style={{width:"100vw"}}>
-        {(fetching ? [{item:"loading...", image:"blank", price:0}] : data.getItemsPaged).map((val: any) => {
+      <div
+        className="row gap-5 justify-content-center mt-2 item-displayer"
+        style={{ width: "100vw" }}
+      >
+        {(fetching
+          ? [{ item: "loading...", image: "blank", price: 0 }]
+          : data.getItemsPaged
+        ).map((val: any) => {
           return (
             <div
               key={val.item}
@@ -126,7 +162,7 @@ export default function Shop({ offset, limit }: variablesQ) {
                 </div>
                 <div
                   className="cardCart"
-                  onClick={()=>handleCartClick(val)}
+                  onClick={() => handleCartClick(val)}
                 ></div>
               </div>
             </div>
@@ -152,9 +188,11 @@ export default function Shop({ offset, limit }: variablesQ) {
             );
           })}
         </ul>
-      {cart.items[0].item
-      ?<button className="btn btn-dark" onClick={handleGo}>Go to Cart</button>
-      :null}
+        {cart.items[0].item ? (
+          <button className="btn btn-dark mb-1 navButt" onClick={handleGo}>
+            Go to Cart
+          </button>
+        ) : null}
       </nav>
       <div className="position-fixed bottom-0 end-0 p-3" style={{ zIndex: 11 }}>
         <div
@@ -164,15 +202,13 @@ export default function Shop({ offset, limit }: variablesQ) {
           aria-live="assertive"
           aria-atomic="true"
         >
-          <div className="toast-body">
-            Item added to Shopping Cart
-          </div>
+          <div className="toast-body">Item added to Shopping Cart</div>
           <button
-              type="button"
-              className="btn-close bg-light me-3"
-              data-bs-dismiss="toast"
-              aria-label="Close"
-            ></button>
+            type="button"
+            className="btn-close bg-light me-3"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
         </div>
       </div>
     </div>

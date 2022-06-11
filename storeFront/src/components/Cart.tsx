@@ -3,7 +3,7 @@ import { RootState } from "../store";
 import { useQuery, useMutation } from "urql";
 import { setCart, setPurchase, setShopping } from "../slices/cartSlice";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 //Order is currently being timestamped when the first item is added to cart.
 // Should be stamped when order is submitted.
@@ -57,10 +57,33 @@ export default function Cart() {
     (state: RootState) => state.login.currentUser
   );
 
+  const [mobile, setMobile] = useState(false)
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [sendResult, sendOrder] = useMutation(SendOrder);
+
+  useEffect(() => {
+    function watchWidth() {
+      if (window.innerWidth <= 576) {
+        setMobile(true)
+      } else if (window.innerWidth > 576) {
+        setMobile(false)
+      }
+    }
+    watchWidth();
+    window.addEventListener("resize", watchWidth);
+    return () => {
+      window.removeEventListener("resize", watchWidth);
+    };
+  }, []);
+
+  // useEffect(() => {
+  //     const appWrap = document.getElementById("app-wrap");
+  //     appWrap?.classList.add("wrapCart")
+  //     return ()=> appWrap?.classList.remove("wrapCart")
+  // },[])
 
   useEffect(() => {
     if (!cart.items[0].item) {
@@ -146,10 +169,10 @@ export default function Cart() {
   return (
     <div className="container-fluid mt-1">
       <div className="cart-header">
-        <h3 className="ms-4">Shopping Cart</h3>
+        <h3 className="cartTitle">Shopping Cart</h3>
         <div className="cart-count">
-          <p className="me-5">
-            Items in cart: {cart.items[0].item ? cart.items.length : 0}(
+          <p className="itemsInCart">
+            {mobile ? 'Items: ':`Items in cart:` }{cart.items[0].item ? cart.items.length : 0}(
             {cart.items[0].item
               ? cart.items.reduce((acc, val) => (acc += val.amount), 0)
               : 0}
@@ -157,7 +180,7 @@ export default function Cart() {
           </p>
         </div>
       </div>
-      <div className="shopping-cart-container">
+      <div className="shopping-cart-container mb-1">
         <hr />
         {cart.items[0].item
           ? cart.items.map((item) => {
@@ -173,7 +196,7 @@ export default function Cart() {
                     <div className="item-center">
                       <h2 className="item-name">{item.item}</h2>
                       <div className="item-qty">
-                        Quantity:{" "}
+                        {mobile ? 'Qty:' : `Quantity:`}{" "}
                         <input
                           type="number"
                           min="1"
@@ -183,24 +206,26 @@ export default function Cart() {
                             handleQty(parseInt(e.target.value), item.item)
                           }
                         />{" "}
-                        Subtotal: ${item.price * item.amount}
+                        <span className="keepTogether">{mobile ? 'Total: $':`Subtotal: $`}{item.price * item.amount}</span>
                       </div>
                       <button
-                        className="btn btn-dark mt-5"
+                        className="btn btn-dark cartRemove"
                         style={{ fontSize: "smaller" }}
                         onClick={() => handleRemove(item.item)}
                       >
-                        Remove from Cart
+                        {mobile ? "Remove" : "Remove from Cart"}
                       </button>
                     </div>
-                    <div className="item-price">Price: ${item.price}</div>
+                    <div className="item-price">{mobile ? `$${item.price}`:`Price: $${item.price}`}</div>
                   </div>
                   <hr />
                 </div>
               );
             })
           : null}
-        <div className="cart-footer">
+        
+      </div>
+      <div className="cart-footer">
             <button className="btn btn-dark" style={{width:"max-content"}} onClick={backToShop}>
               Back to Shop
             </button>
@@ -221,10 +246,9 @@ export default function Cart() {
             </button>
           )}
           <div className="footer-total">
-            <div>Total: ${cart.total}</div>
+            <div>{mobile ? `$`:`Total: $`}{cart.total}</div>
           </div>
         </div>
-      </div>
       <div className="cart-modal">
         <div
           className="modal fade"
@@ -246,7 +270,7 @@ export default function Cart() {
                   aria-label="Close"
                 ></button>
               </div>
-              <div className="modal-body">
+              <div className="modal-body confirmModal">
                 <h4 className="mb-3">Receipt Total:</h4>
                 <strong className="ms-3">${cart.total} AUD</strong>
                 <h4 className="mt-2">Payment Information</h4>

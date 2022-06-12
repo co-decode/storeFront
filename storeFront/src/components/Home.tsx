@@ -9,11 +9,11 @@ export default function Home() {
     <>
       <div id="bgContainer"></div>
 
-      <div className="container position-relative">
-        <h1 className="display-1">Welcome,</h1>
-        <h1 className="display-3 offset-md-1 mobileInvis">to my fitness store</h1>
+      <div className="container position-relative welcomeC">
+        <h1 className="display-1 welcome">Welcome,</h1>
+        <h1 className="display-3 offset-md-1 mobileInvis welcome2">to my fitness store</h1>
         <button
-          className="btn btn-dark offset-2 mt-3"
+          className="btn btn-dark offset-2 mt-3 welcomeB"
           tabIndex={1}
           style={{ borderRadius: "50px" }}
           onClick={handleShop}

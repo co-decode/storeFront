@@ -84,7 +84,13 @@ export default function Shop({ offset, limit }: variablesQ) {
         dispatch(setLimit(4))
       } else if (window.innerWidth > 959 && window.innerWidth <= 1295) {
         dispatch(setLimit(6))
-      } else if (window.innerWidth > 1295 ) {
+      } else if (window.innerWidth > 1295 && window.innerWidth <= 1631 ) {
+        dispatch(setLimit(8))
+      } else if (window.innerWidth > 1295 && window.innerWidth <= 1659 ) {
+        dispatch(setLimit(10))
+      } else if (window.innerWidth > 1659 && window.innerWidth <= 2191 ) {
+        dispatch(setLimit(6)) 
+      } else if (window.innerWidth > 2191) {
         dispatch(setLimit(8))
       }
     }
@@ -159,7 +165,7 @@ export default function Shop({ offset, limit }: variablesQ) {
             <div
               key={val.item}
               className="card"
-              style={{ width: "18rem", padding: 0 }}
+              style={{ padding: 0 }}
             >
               <div className="wrapper">
                 <img
@@ -219,7 +225,7 @@ export default function Shop({ offset, limit }: variablesQ) {
           </button>
         ) : null}
       </nav>
-      <div className="position-fixed bottom-0 end-0 m-3" style={{ zIndex: 11 }}>
+      <div className="position-fixed bottom-0 end-0 m-3 " style={{ zIndex: 11 }}>
         <div
           id="liveToast"
           className="toast bg-dark border-0 text-white shopToast"
@@ -230,7 +236,7 @@ export default function Shop({ offset, limit }: variablesQ) {
           <div className="toast-body shopToastBody">Item added to Shopping Cart</div>
           <button
             type="button"
-            className="btn-close bg-light me-3"
+            className="btn-close bg-light me-3 shopToastButton"
             data-bs-dismiss="toast"
             aria-label="Close"
           ></button>

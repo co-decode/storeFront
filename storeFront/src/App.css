@@ -64,7 +64,9 @@
 }
  */
 /* Shop */
-
+.card {
+  width:18em
+}
 .shopCard {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -392,7 +394,74 @@
   }  
 }
 
+@media (min-width:1660px) {
+  .navbar{
+    margin-left:20px;
+    font-size:48px;
+  }
+  .navbar-brand{
+    font-size:60px;
+  }
+  .navbar-nav {
+    margin-left:50px;
+    gap:50px;
+  }
+  /* Home */
+  .welcome{
+    font-size:200px;
+    margin-left:-10%;
+  }
+  .welcome2{
+    font-size:160px;
+    margin-left:-5%;
+    margin-bottom:50px;
+  }
+  .welcomeB{
+    margin-left:0;
+    font-size: 48px;
+    padding:10px;
+    padding-left:50px;
+    padding-right:50px;
+  }
+
+  .welcomeC {
+    margin-left:10%;
+  }
+
+  /* Shop */
+  
+  .card {
+    width:32em;
+  }
+  .shopCard {
+    font-size:30px;
+  }
+  .navButt {
+    font-size: 38px;
+    border-radius: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .page-link {
+    font-size: 40px;
+  }
+  .shopToast {
+    width:700px;
+  }
+  .shopToastBody {
+    font-size: 40px;
+    margin-left:20px;
+    /* width:max-content; */
+  }
+  .shopToastButton {
+    width:40px;
+    height:40px;
+  }
+
+}
+
 #navbarNavDropdown > ul {
   flex-direction:row;
   justify-content:space-between;
 }
+

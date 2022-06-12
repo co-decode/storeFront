@@ -11,6 +11,7 @@ import { RootState } from "./store";
 
 export default function App() {
   const page = useSelector((state: RootState) => state.page.page);
+  const limit = useSelector((state:RootState)=> state.page.limit)
 
   return (
     <Routes>
@@ -18,7 +19,7 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="login" element={<Login />} /> 
-        <Route path={`shop`} element={<Shop offset={page} limit={3} />}>
+        <Route path={`shop`} element={<Shop offset={page} limit={limit} />}>
         </Route>
         <Route path="cart" element={<Cart />} />
         <Route path="user" element={<User />}>

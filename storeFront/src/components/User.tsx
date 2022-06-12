@@ -344,7 +344,7 @@ export default function User() {
                             <div>
                               x{v.amount} {v.item}{" "}
                             </div>
-                            <div>Price: {v.price}</div>
+                            <div>Price: ${v.price}</div>
                           </div>
                         );
                       })}

@@ -2,11 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface PageState {
   page: number,
+  limit:number,
 }
 
 
 const initialState: PageState = {
   page: 0,
+  limit: 3,
 };
 
 export const pageSlice = createSlice({
@@ -16,9 +18,12 @@ export const pageSlice = createSlice({
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
     },
+    setLimit: (state, action:PayloadAction<number>) => {
+      state.limit = action.payload;
+    }
   },
 });
 
-export const { setPage } = pageSlice.actions;
+export const { setPage, setLimit } = pageSlice.actions;
 
 export default pageSlice.reducer

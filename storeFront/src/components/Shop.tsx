@@ -1,6 +1,6 @@
 import { useQuery } from "urql";
 import { useDispatch, useSelector } from "react-redux";
-import { setPage } from "../slices/pageSlice";
+import { setPage, setLimit } from "../slices/pageSlice";
 import { setCart } from "../slices/cartSlice";
 import { RootState } from "../store";
 import { useNavigate } from "react-router-dom";
@@ -76,6 +76,31 @@ export default function Shop({ offset, limit }: variablesQ) {
     };
   }, []);
 
+  useEffect(()=> {
+    function initialiseArray() {
+      if (window.innerWidth <= 623) {
+        dispatch(setLimit(3))
+      } else if (window.innerWidth > 623 && window.innerWidth <= 959) {
+        dispatch(setLimit(4))
+      } else if (window.innerWidth > 959 && window.innerWidth <= 1295) {
+        dispatch(setLimit(6))
+      } else if (window.innerWidth > 1295 ) {
+        dispatch(setLimit(8))
+      }
+    }
+    initialiseArray();
+    window.addEventListener("resize", initialiseArray);
+    return () => {
+      window.removeEventListener("resize", initialiseArray);
+    }
+  },[])
+
+  useEffect(()=> {
+    if (page > Math.ceil(16/limit)) {
+      dispatch(setPage(0))
+    }
+  },[limit])
+
   const handleCart = (
     item: string,
     price: number,
@@ -124,7 +149,7 @@ export default function Shop({ offset, limit }: variablesQ) {
       {/* This is the shop {JSON.stringify(cart)} */}
       <div
         className="row gap-5 justify-content-center mt-2 item-displayer"
-        style={{ width: "100vw" }}
+        style={{ width: "100vw", marginLeft:0, marginRight:0 }}
       >
         {(fetching
           ? [{ item: "loading...", image: "blank", price: 0 }]
@@ -171,7 +196,7 @@ export default function Shop({ offset, limit }: variablesQ) {
       </div>
       <nav aria-label="Item Pages" className="shopNav">
         <ul className="pagination pagination-lg justify-content-center mt-4">
-          {[0, 1, 2, 3, 4, 5].map((val) => {
+          {new Array(Math.ceil(16 / limit)).fill(1).map((val, index)=>index).map((val) => {
             return (
               <li
                 key={val}
@@ -194,7 +219,7 @@ export default function Shop({ offset, limit }: variablesQ) {
           </button>
         ) : null}
       </nav>
-      <div className="position-fixed bottom-0 end-0 p-3" style={{ zIndex: 11 }}>
+      <div className="position-fixed bottom-0 end-0 m-3" style={{ zIndex: 11 }}>
         <div
           id="liveToast"
           className="toast bg-dark border-0 text-white shopToast"

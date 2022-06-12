@@ -318,6 +318,13 @@
     flex-direction:row;
     justify-content: space-evenly;
   }
+  .cardXinput {
+    border:1px #212529 solid;
+    margin-left:4px;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: baseline;
+  }
   .pagination {
     margin:5px;
     }

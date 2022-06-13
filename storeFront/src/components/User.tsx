@@ -243,37 +243,25 @@ export default function User() {
             <button
               className="btn btn-dark me-3"
               onClick={() => setShowPass(!showPass)}
-              style={{ width: "188px" }}
             >
               {showPass ? "Hide Password" : "View Password"}
             </button>
             {showPass ? (
               <input
                 type="text"
-                style={{
-                  border: "none",
-                  fontSize: "20px",
-                  textAlign: "center",
-                }}
                 value={currentUser.password}
                 disabled
               />
             ) : (
               <input
                 type="password"
-                style={{
-                  border: "none",
-                  fontSize: "20px",
-                  textAlign: "center",
-                }}
                 value={currentUser.password}
                 disabled
               />
             )}
           </div>
           <button
-            className="btn btn-dark mt-5"
-            style={{ width: "188px" }}
+            className="btn btn-dark mt-5 changePassButton"
             onClick={toggleForm}
           >
             Change Your Password
@@ -304,7 +292,7 @@ export default function User() {
               onChange={(e) => setChangePass2(e.target.value)}
               onFocus={resetFeedback}
             />
-            <button className="btn btn-danger mt-3" type="submit">
+            <button className="btn btn-danger mt-3 changePassSubmit" type="submit">
               Submit
             </button>
             <div className="valid-feedback">
@@ -330,7 +318,7 @@ export default function User() {
         >
           <h4>Purchase History</h4>
           {!historyResult.fetching && historyResult.data.getUser.orders[0]  ? (
-            <div style={{ marginLeft: "0", lineHeight: "2em" }}>
+            <div style={{ marginLeft: "0"}}>
               {Object.assign([], historyResult.data.getUser.orders)
                 .reverse()
                 .map((val: Order) => {
@@ -355,19 +343,13 @@ export default function User() {
                         </div>
                       </div>
                       <button
-                        className="btn btn-danger"
-                        style={{
-                          width: "300px",
-                          height: "24px",
-                          padding: 0,
-                          fontSize: "smaller",
-                        }}
+                        className="btn btn-danger historyButton"
                         tabIndex={-1}
                         onClick={() => handleCancel(val.id)}
                       >
                         Cancel this Order
                       </button>
-                      <hr style={{ width: "300px" }} />
+                      <hr className="historyDivider" />
                     </div>
                   );
                 })}

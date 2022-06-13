@@ -5,9 +5,6 @@ import { setCart, setPurchase, setShopping } from "../slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-//Order is currently being timestamped when the first item is added to cart.
-// Should be stamped when order is submitted.
-
 const SendOrder = `
         mutation($id: ID, $orders: [OrderInput]) {
             appendOrder(id:$id, orders: $orders) {
@@ -78,12 +75,6 @@ export default function Cart() {
       window.removeEventListener("resize", watchWidth);
     };
   }, []);
-
-  // useEffect(() => {
-  //     const appWrap = document.getElementById("app-wrap");
-  //     appWrap?.classList.add("wrapCart")
-  //     return ()=> appWrap?.classList.remove("wrapCart")
-  // },[])
 
   useEffect(() => {
     if (!cart.items[0].item) {
@@ -210,7 +201,6 @@ export default function Cart() {
                       </div>
                       <button
                         className="btn btn-dark cartRemove"
-                        style={{ fontSize: "smaller" }}
                         onClick={() => handleRemove(item.item)}
                       >
                         {mobile ? "Remove" : "Remove from Cart"}
@@ -257,10 +247,10 @@ export default function Cart() {
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
         >
-          <div className="modal-dialog">
+          <div className="modal-dialog purchaseModalDialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">
+                <h5 className="modal-title purchaseModalTitle" id="exampleModalLabel">
                   Confirm Purchase
                 </h5>
                 <button
@@ -312,12 +302,12 @@ export default function Cart() {
                   <input id="credit4" type="text" style={{ gridRow: "8/9" }} disabled />
                 </form>
                 <h4>Shipping Information <small><sup>Free Shipping!</sup></small></h4>
-                <div style={{ display: "flex", alignItems: "center"}}>
-                  <select className="btn btn-dark m-2">
+                <div className="purchaseModalSelectDiv" style={{ display: "flex", alignItems: "center"}}>
+                  <select className="btn btn-dark m-2 purchaseModalSelect">
                     <option>Normal</option>
                     <option>Express</option>
                   </select>
-                  <div className="ms-3">
+                  <div className="ms-3 purchaseModalEstimate">
                     Estimated time of arrival:{" "}
                     <samp className="ms-1">
                       <strong>never</strong>
@@ -328,14 +318,14 @@ export default function Cart() {
               <div className="modal-footer">
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn btn-secondary purchaseModalButtons"
                   data-bs-dismiss="modal"
                 >
                   Close
                 </button>
                 <button
                   type="button"
-                  className="btn btn-primary"
+                  className="btn btn-primary purchaseModalButtons"
                   data-bs-dismiss="modal"
                   onClick={handlePurchase}
                 >

@@ -1,8 +1,6 @@
 
 .navbar {
   position:relative;
-  /* top:0;
-  width:100vw; */
 }
   
   #bgContainer {
@@ -44,6 +42,8 @@
   position: absolute;
 }
 
+/* Login */
+
 .mb-33 {
   margin-bottom: 33px;
 }
@@ -58,13 +58,16 @@
 .eyeclosed {
   background-image: url(../closedeye.svg);
 }
-/* 
-.loginCard {
-    width: 90vw;
-}
- */
+
+.subContainer {
+  width:max-content;
+  display:flex;
+  flex-direction:column;
+  margin:auto;
+}  
+
 /* Shop */
-.card {
+.shopCardParent {
   width:18em
 }
 .shopCard {
@@ -167,6 +170,9 @@
 .item-center {
   margin-left: 10px;
 }
+.cartRemove {
+  font-size: smaller;
+}
 .cart-header {
   display: flex;
   /* flex-direction: column; */
@@ -227,7 +233,7 @@
   grid-template-columns: 1fr;
 }
 
-/* User */
+/* Profile */
 .listDiv {
   display: flex;
   width: 250px;
@@ -283,12 +289,35 @@
   flex-direction: column;
   align-items: center;
   width: 500px;
+  line-height:2em;
+}
+
+.historyButton {
+  width: "300px";
+  height: "24px";
+  padding: 0;
+  font-size: "smaller";
+}
+.historyDivider {
+  width:300px
 }
 
 .userViewPass {
   display: flex;
   align-items: center;
   width:500px;
+}
+.userViewPass > button {
+  width: 188px;
+}
+.userViewPass > input {
+  border: none;
+  font-size: 20px;
+  text-align: center;
+}
+
+.changePassButton {
+  width:188px;
 }
 
 .changePassForm {
@@ -298,6 +327,8 @@
 
 .purchaseToastContainer {
   bottom: 0;
+  transform: translate(-50%, 0);
+  left:50%;
 }
 
 /* Responsiveness */
@@ -378,18 +409,24 @@
     top:40px;
     left:-10px;
   }
+  /* Login */
+
 }
 
 @media (min-width:576px) {
   .loginContainer {
-  /* margin:auto; */
+  margin:auto;
   display:block;
   }
   .loginCard {
     margin:auto;
+    width:500px;
   }
   .subContainer {
-    max-width: 450px;
+    max-width: 500px;
+    width:500px;
+    display:flex;
+    flex-direction:column;
     margin:auto;
   }  
 }
@@ -397,7 +434,7 @@
 @media (min-width:1660px) {
   .navbar{
     margin-left:20px;
-    font-size:48px;
+    font-size:42px;
   }
   .navbar-brand{
     font-size:60px;
@@ -458,6 +495,182 @@
     height:40px;
   }
 
+   /* Cart */
+   .cartTitle {
+    font-size:56px;
+    margin-top:15px;
+   }
+   .cart-count {
+    font-size:32px;
+   }
+   .cart-item {
+    display: grid;
+    grid-template-columns: max-content 3fr 1fr;
+  }
+  .item-image > img {
+    width: 17em;
+  }
+  .item-center {
+    margin-left: 20px;
+  }
+  .item-center > h2 {
+    font-size:64px;
+  }
+  .item-qty {
+    font-size:32px;
+  }
+  .cartRemove {
+    font-size: 26px;
+  }
+  .item-price {
+    font-size:32px;
+  }
+   .cart-footer > button{
+    font-size:32px;
+   }
+   .footer-total {
+    font-size:32px;
+   }
+   /* Login */
+   .subContainer {
+    margin-top:50px;
+    max-width: 900px;
+   }
+   .loginCard > h5 {
+    font-size: 38px;
+   }
+   .loginCard > div > button {
+    font-size: 32px;
+    margin-top: 20px;
+   }
+   .passwordField {
+    margin-top: 40px;
+   }
+   .loginCard {
+    font-size:30px;
+   }
+   .loginInput {
+    font-size: 30px;
+   }
+   .eye {
+    width:60px;
+    height:30px;
+    vertical-align:middle;
+   }
+   .loginSwitch {
+    font-size:32px;
+   }
+   /* Profile */
+   .profileTitle {
+    width: 600px;
+   }
+   .profileTitle > h3 {
+    font-size:48px;
+   }
+   .userHistory {
+    width: 600px;
+   }
+   .userHistory > h4 {
+    font-size: 36px;
+   }
+   .userHistory > div > div {
+    font-size: 30px;
+   }
+   .userHistory > div {
+    line-height: 3em;
+   }
+   .listDiv {
+    width: 525px;
+   }
+   .listDiv {
+    margin-bottom:15px;
+   }
+   .statusDiv {
+    width: 550px;
+   }
+   .historyButton {
+    font-size:32px;
+    width: 550px;
+   }
+   .historyDivider {
+    width: 550px;
+   }
+   #purchaseToast {
+    font-size: 32px;
+   }
+   .userViewPass {
+    width: 700px;
+   }
+   .userViewPass > button {
+    font-size: 32px;
+    width:350px;
+   }
+   .userViewPass > input {
+    font-size:32px;
+   }
+   .changePassButton {
+     width:350px;
+     font-size:32px;
+   }
+   .changePassForm {
+    font-size:32px;
+    width: 700px;
+   }
+   .changePassForm > input {
+    font-size:32px;
+    margin-bottom:20px;
+   }
+   .changePassSubmit {
+    font-size:32px;
+   }
+   .booksvg, .gearsvg {
+    width: 50px;
+   }
+   /* Logout */
+   #LogoutLabel {
+    font-size:50px;
+    margin-left:20px;
+   }
+   .logoutDialog {
+    /* display:grid; */
+    max-width:max-content;
+   }
+   .logoutContent {
+    width: 700px;
+    text-align: center;
+   }
+   .logoutButtons {
+    font-size: 28px;
+    margin-right: 10px;
+   }
+   /* Purchase Modal */
+   .purchaseModalTitle {
+    font-size: 32px;
+   }
+   .confirmModal > h4 {
+    font-size: 32px;
+   }
+   .confirmModal > strong {
+    font-size: 28px;
+   }
+   .confirmModal > form > label {
+    font-size: 28px;
+   }
+   .purchaseModalDialog {
+    max-width: 700px;
+   }
+   .purchaseModalSelectDiv {
+    font-size: 20px;
+   }
+   .purchaseModalSelect {
+    font-size:28px;
+   }
+   .purchaseModalEstimate {
+    font-size:28px;
+   }
+   .purchaseModalButtons {
+    font-size: 28px;
+   }
 }
 
 #navbarNavDropdown > ul {

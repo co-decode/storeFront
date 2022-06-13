@@ -90,8 +90,8 @@ export default function Navbar() {
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
               >
-                <div className="modal-dialog">
-                  <div className="modal-content">
+                <div className="modal-dialog logoutDialog">
+                  <div className="modal-content logoutContent ">
                     <div className="modal-header">
                       <h5 className="modal-title" id="LogoutLabel">
                         Confirm Logout
@@ -109,14 +109,14 @@ export default function Navbar() {
                     <div className="modal-footer">
                       <button
                         type="button"
-                        className="btn btn-secondary"
+                        className="btn btn-secondary logoutButtons"
                         data-bs-dismiss="modal"
                       >
                         Close
                       </button>
                       <button
                         type="button"
-                        className="btn btn-primary"
+                        className="btn btn-primary logoutButtons"
                         data-bs-dismiss="modal"
                         onClick={handleLogout}
                         >

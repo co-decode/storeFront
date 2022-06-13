@@ -164,7 +164,7 @@ export default function Shop({ offset, limit }: variablesQ) {
           return (
             <div
               key={val.item}
-              className="card"
+              className="card shopCardParent"
               style={{ padding: 0 }}
             >
               <div className="wrapper">

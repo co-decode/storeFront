@@ -152,10 +152,9 @@ export default function Shop({ offset, limit }: variablesQ) {
 
   return (
     <div>
-      {/* This is the shop {JSON.stringify(cart)} */}
       <div
         className="row gap-5 justify-content-center mt-2 item-displayer"
-        style={{ width: "100vw", marginLeft:0, marginRight:0 }}
+        style={{ width: "100%", marginLeft:0, marginRight:0 }}
       >
         {(fetching
           ? [{ item: "loading...", image: "blank", price: 0 }]

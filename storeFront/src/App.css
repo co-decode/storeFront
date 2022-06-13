@@ -6,7 +6,7 @@
   #bgContainer {
   height: 100vh;
   width: 100vw;
-  background-image: url("../bg121.jpg");
+  background-image: url("./assets/bg121.jpg");
   background-size: 100vw auto;
   background-repeat: no-repeat;
   top: 0;
@@ -15,8 +15,30 @@
   z-index: -1;
 }
 
+.aboutBg {
+  height: 100vh;
+  width: 100vw;
+  background-image: url("./assets/bgAbout.jpg");
+  background-size: 100vw auto;
+  background-repeat: no-repeat;
+  top: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+.aboutDiv {
+  font-size:20px;
+}
+.firstP {
+  margin-top: 40px;
+}
+
 @media (orientation: portrait) {
   #bgContainer {
+    background-size: auto 100vh;
+    background-position: right;
+  }
+  .aboutBg {
     background-size: auto 100vh;
     background-position: right;
   }
@@ -49,14 +71,14 @@
 }
 
 .eyeopen {
-  background-image: url(../eyesvg.svg);
+  background-image: url(./assets/eyesvg.svg);
   background-repeat: no-repeat;
   background-position: center;
   vertical-align: super;
 }
 
 .eyeclosed {
-  background-image: url(../closedeye.svg);
+  background-image: url(./assets/closedeye.svg);
 }
 
 .subContainer {
@@ -83,7 +105,7 @@
 }
 
 .cardCart {
-  background-image: url(../cart.svg);
+  background-image: url(./assets/cart.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 50%;
@@ -249,7 +271,7 @@
 }
 
 .booksvg {
-  background-image: url(../book.svg);
+  background-image: url(./assets/book.svg);
   background-repeat: no-repeat;
   width: 30px;
   cursor: pointer;
@@ -258,7 +280,7 @@
 
 .gearsvg {
   background-position: center;
-  background-image: url(../gear.svg);
+  background-image: url(./assets/gear.svg);
   background-repeat: no-repeat;
   width: 30px;
   cursor: pointer;
@@ -393,6 +415,9 @@
     margin-top: 5px;
     width: 93vw;
   }
+  .historyButton {
+    width:300px;
+  }
   .userViewPass {
     width: 95vw;
   }
@@ -408,9 +433,19 @@
   .purchaseToastContainer {
     top:40px;
     left:-10px;
-  }
+    transform:translate(0,0);
+    }
   /* Login */
-
+  .subContainer {
+    width:90%;
+  }
+  /* About */
+  .aboutDiv {
+    font-size:16px;
+  }
+  .firstP {
+    margin-top:20px
+  }
 }
 
 @media (min-width:576px) {
@@ -670,6 +705,13 @@
    }
    .purchaseModalButtons {
     font-size: 28px;
+   }
+   /* About */
+   .aboutDiv > h1 {
+    font-size:90px;
+   }
+   .aboutDiv {
+    font-size: 32px;
    }
 }
 

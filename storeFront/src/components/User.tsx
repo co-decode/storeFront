@@ -373,9 +373,6 @@ export default function User() {
           ) : (<div>...Loading...</div>)}
         </div>
       ) : null}
-
-      
-      <button onClick={thankYou} ></button>
     </div>
   );
 }

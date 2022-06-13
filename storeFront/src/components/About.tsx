@@ -1,12 +1,32 @@
-
-export default function About () {
-    return (
-        <div className="position-relative">
-            <h1 className="display-2 offset-1">About My Fitness Store:</h1>
-            <p className="offset-2 mt-5">This site is a personal project for the demonstration for urql, redux and typescript. <br/>
-               Images for shop items were obtained from <em>pexels.com</em> <br/>
-               SVG images were obtained from <em>svgrepo.com</em>
-            </p>
-        </div>
-    )
+export default function About() {
+  return (
+    <>
+      <div className="aboutBg"></div>
+      <div className="position-relative aboutDiv">
+        <h1 className="display-2 offset-1">About <span style={{whiteSpace:"nowrap"}}>My Fitness Store:</span></h1>
+        <p className="offset-1 firstP">
+          This site is a personal project for the demonstration of the following
+          technologies: <br /> mongodb, nodejs, express, apollo server, urql,
+          vite, react, redux, boostrap 5.1 and typescript.
+          <br />
+          </p>
+          <p className="offset-1">
+          The database is deployed on MongoDB Atlas, <br/>
+          The server is deployed from Heroku, <br/>
+          and the Client is hosted with Github-Pages.
+        </p>
+        <p className=" offset-1">
+            All images were obtained under Creative Commons licence <br/>
+          Images for shop items and backgrounds were obtained from{" "}
+          <em>pexels.com</em> <br />
+          Thank you to ... <br/>
+          SVG images were obtained from <em>svgrepo.com</em>
+        </p>
+        <p className=" offset-1">
+          Created by Cody Ross <br />
+          If you wish to contact me, please visit my website at codyross.xyz
+        </p>
+      </div>
+    </>
+  );
 }

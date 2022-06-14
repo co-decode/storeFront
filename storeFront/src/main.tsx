@@ -11,9 +11,6 @@ const client = createClient({
   url: "http://localhost:3001/graphql",
 });
 
-
-
-
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <URQLProvider value={client}>

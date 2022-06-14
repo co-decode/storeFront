@@ -1,9 +1,8 @@
-
 .navbar {
-  position:relative;
+  position: relative;
 }
-  
-  #bgContainer {
+
+#bgContainer {
   height: 100vh;
   width: 100vw;
   background-image: url("./assets/bg121.jpg");
@@ -27,10 +26,147 @@
   z-index: -1;
 }
 .aboutDiv {
-  font-size:20px;
+  font-size: 20px;
 }
 .firstP {
   margin-top: 40px;
+}
+
+.svgCollection {
+  display:flex;
+  gap:10px;
+  width:830px;
+  scrollbar-width: thin;
+}
+
+@media (max-width: 920px) {
+  .svgCollection {
+    width: 90%;
+    
+    gap:0px;
+    overflow-x:scroll;
+  }
+}
+
+@media (min-width: 1660px) {
+  .svgCollection > div {
+    width:100px;
+    height:100px;
+    background-size:90px auto;
+  }
+}
+
+.mongodb {
+  background-image: url("./assets/mongodb.svg");
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-size:50px auto;
+  flex-shrink:0;
+}
+.nodejs {
+  background-image: url("./assets/nodejs.svg");
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-size:50px auto;
+  flex-shrink:0;
+}
+.graphql {
+  background-image: url("./assets/graphql1.svg");
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-size:50px auto;
+  flex-shrink:0;
+}
+.apollo {
+  background-image: url("./assets/apollo.svg");
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-size:50px auto;
+  flex-shrink:0;
+}
+.urql {
+  background-image: url("./assets/urql.svg");
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-size:50px auto;
+  flex-shrink:0;
+}
+.vite {
+  background-image: url("./assets/vite.svg");
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-size:50px auto;
+  flex-shrink:0;
+}
+.typescript {
+  background-image: url("./assets/typescript1.svg");
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-size:50px auto;
+  flex-shrink:0;
+}
+.react {
+  background-image: url("./assets/react.svg");
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-size:50px auto;
+  flex-shrink:0;
+}
+.redux {
+  background-image: url("./assets/redux.svg");
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-size:50px auto;
+  flex-shrink:0;
+}
+.html {
+  background-image: url("./assets/html.svg");
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-size:50px auto;
+  flex-shrink:0;
+}
+.css {
+  background-image: url("./assets/css.svg");
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-size:50px auto;
+  flex-shrink:0;
+}
+.git {
+  background-image: url("./assets/git1.svg");
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-size:50px auto;
+  flex-shrink:0;
+}
+.github {
+  background-image: url("./assets/github1.svg");
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-size:50px auto;
+  flex-shrink:0;
+}
+.heroku {
+  background-image: url("./assets/heroku1.svg");
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-size:50px auto;
+  flex-shrink:0;
 }
 
 @media (orientation: portrait) {
@@ -47,7 +183,6 @@
 .wrapper {
   position: relative;
   height: 0;
-  /* Formula is: (height / width * 100%) */
   padding-top: 100%;
 }
 
@@ -82,15 +217,15 @@
 }
 
 .subContainer {
-  width:max-content;
-  display:flex;
-  flex-direction:column;
-  margin:auto;
-}  
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
 
 /* Shop */
 .shopCardParent {
-  width:18em
+  width: 18em;
 }
 .shopCard {
   display: grid;
@@ -138,7 +273,7 @@
 }
 
 .cartRemove {
-  margin-top:15px;
+  margin-top: 15px;
 }
 
 .pagination > li > span {
@@ -168,7 +303,7 @@
 }
 
 .shopNav {
-  z-index:12;
+  z-index: 12;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -178,7 +313,7 @@
 /* Cart */
 
 .shopping-cart-container {
-  height:78.2vh;
+  height: 78.2vh;
   position: relative;
   overflow-y: scroll;
 }
@@ -243,7 +378,7 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(4, 1fr 2fr);
   column-gap: 10px;
-  justify-content:center;
+  justify-content: center;
 }
 
 .creditInfo > input {
@@ -298,10 +433,10 @@
 
 .profileTitle {
   display: flex;
-  position:relative;
+  position: relative;
   margin-bottom: 20px;
-  margin-left:auto;
-  margin-right:auto;
+  margin-left: auto;
+  margin-right: auto;
   width: 400px;
   justify-content: space-between;
 }
@@ -311,7 +446,7 @@
   flex-direction: column;
   align-items: center;
   width: 500px;
-  line-height:2em;
+  line-height: 2em;
 }
 
 .historyButton {
@@ -321,13 +456,13 @@
   font-size: "smaller";
 }
 .historyDivider {
-  width:300px
+  width: 300px;
 }
 
 .userViewPass {
   display: flex;
   align-items: center;
-  width:500px;
+  width: 500px;
 }
 .userViewPass > button {
   width: 188px;
@@ -339,18 +474,18 @@
 }
 
 .changePassButton {
-  width:188px;
+  width: 188px;
 }
 
 .changePassForm {
-  width:400px;
-  margin-top:20px;
+  width: 400px;
+  margin-top: 20px;
 }
 
 .purchaseToastContainer {
   bottom: 0;
   transform: translate(-50%, 0);
-  left:50%;
+  left: 50%;
 }
 
 /* Responsiveness */
@@ -370,42 +505,42 @@
 
     background-color: white;
 
-    flex-direction:row;
+    flex-direction: row;
     justify-content: space-evenly;
   }
   .cardXinput {
-    border:1px #212529 solid;
-    margin-left:4px;
+    border: 1px #212529 solid;
+    margin-left: 4px;
     border-radius: 5px;
     text-align: center;
     vertical-align: baseline;
   }
   .pagination {
-    margin:5px;
-    }
+    margin: 5px;
+  }
 
   .item-displayer {
-      margin-bottom:80px;
-      margin-left:0;
-      margin-right:0;
+    margin-bottom: 80px;
+    margin-left: 0;
+    margin-right: 0;
   }
   #liveToast {
-    width:max-content;
-    margin-bottom:35px;
+    width: max-content;
+    margin-bottom: 35px;
   }
   .shopToastBody {
     width: max-content;
   }
   /* cart */
   .cartRemove {
-    margin-top:5px
+    margin-top: 5px;
   }
   .item-name {
     font-size: medium;
   }
   .cart-footer {
-    padding:1;
-    column-gap:2px;
+    padding: 1;
+    column-gap: 2px;
   }
   /* profile */
   .profileDisplay {
@@ -416,13 +551,13 @@
     width: 93vw;
   }
   .historyButton {
-    width:300px;
+    width: 300px;
   }
   .userViewPass {
     width: 95vw;
   }
   .userViewPass > input {
-    min-width:0;
+    min-width: 0;
   }
   .changePassForm {
     margin-top: 20px;
@@ -431,82 +566,82 @@
     width: max-content;
   }
   .purchaseToastContainer {
-    top:40px;
-    left:-10px;
-    transform:translate(0,0);
-    }
+    top: 40px;
+    left: -10px;
+    transform: translate(0, 0);
+  }
   /* Login */
   .subContainer {
-    width:90%;
+    width: 90%;
   }
   /* About */
   .aboutDiv {
-    font-size:16px;
+    font-size: 16px;
   }
   .firstP {
-    margin-top:20px
+    margin-top: 20px;
   }
 }
 
-@media (min-width:576px) {
+@media (min-width: 576px) {
   .loginContainer {
-  margin:auto;
-  display:block;
+    margin: auto;
+    display: block;
   }
   .loginCard {
-    margin:auto;
-    width:500px;
+    margin: auto;
+    width: 500px;
   }
   .subContainer {
     max-width: 500px;
-    width:500px;
-    display:flex;
-    flex-direction:column;
-    margin:auto;
-  }  
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+  }
 }
 
-@media (min-width:1660px) {
-  .navbar{
-    margin-left:20px;
-    font-size:42px;
+@media (min-width: 1660px) {
+  .navbar {
+    margin-left: 20px;
+    font-size: 42px;
   }
-  .navbar-brand{
-    font-size:60px;
+  .navbar-brand {
+    font-size: 60px;
   }
   .navbar-nav {
-    margin-left:50px;
-    gap:50px;
+    margin-left: 50px;
+    gap: 50px;
   }
   /* Home */
-  .welcome{
-    font-size:200px;
-    margin-left:-10%;
+  .welcome {
+    font-size: 200px;
+    margin-left: -10%;
   }
-  .welcome2{
-    font-size:160px;
-    margin-left:-5%;
-    margin-bottom:50px;
+  .welcome2 {
+    font-size: 160px;
+    margin-left: -5%;
+    margin-bottom: 50px;
   }
-  .welcomeB{
-    margin-left:0;
+  .welcomeB {
+    margin-left: 0;
     font-size: 48px;
-    padding:10px;
-    padding-left:50px;
-    padding-right:50px;
+    padding: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
   }
 
   .welcomeC {
-    margin-left:10%;
+    margin-left: 10%;
   }
 
   /* Shop */
-  
+
   .card {
-    width:32em;
+    width: 32em;
   }
   .shopCard {
-    font-size:30px;
+    font-size: 30px;
   }
   .navButt {
     font-size: 38px;
@@ -518,27 +653,27 @@
     font-size: 40px;
   }
   .shopToast {
-    width:700px;
+    width: 700px;
   }
   .shopToastBody {
     font-size: 40px;
-    margin-left:20px;
+    margin-left: 20px;
     /* width:max-content; */
   }
   .shopToastButton {
-    width:40px;
-    height:40px;
+    width: 40px;
+    height: 40px;
   }
 
-   /* Cart */
-   .cartTitle {
-    font-size:56px;
-    margin-top:15px;
-   }
-   .cart-count {
-    font-size:32px;
-   }
-   .cart-item {
+  /* Cart */
+  .cartTitle {
+    font-size: 56px;
+    margin-top: 15px;
+  }
+  .cart-count {
+    font-size: 32px;
+  }
+  .cart-item {
     display: grid;
     grid-template-columns: max-content 3fr 1fr;
   }
@@ -549,174 +684,174 @@
     margin-left: 20px;
   }
   .item-center > h2 {
-    font-size:64px;
+    font-size: 64px;
   }
   .item-qty {
-    font-size:32px;
+    font-size: 32px;
   }
   .cartRemove {
     font-size: 26px;
   }
   .item-price {
-    font-size:32px;
+    font-size: 32px;
   }
-   .cart-footer > button{
-    font-size:32px;
-   }
-   .footer-total {
-    font-size:32px;
-   }
-   /* Login */
-   .subContainer {
-    margin-top:50px;
+  .cart-footer > button {
+    font-size: 32px;
+  }
+  .footer-total {
+    font-size: 32px;
+  }
+  /* Login */
+  .subContainer {
+    margin-top: 50px;
     max-width: 900px;
-   }
-   .loginCard > h5 {
+  }
+  .loginCard > h5 {
     font-size: 38px;
-   }
-   .loginCard > div > button {
+  }
+  .loginCard > div > button {
     font-size: 32px;
     margin-top: 20px;
-   }
-   .passwordField {
+  }
+  .passwordField {
     margin-top: 40px;
-   }
-   .loginCard {
-    font-size:30px;
-   }
-   .loginInput {
+  }
+  .loginCard {
     font-size: 30px;
-   }
-   .eye {
-    width:60px;
-    height:30px;
-    vertical-align:middle;
-   }
-   .loginSwitch {
-    font-size:32px;
-   }
-   /* Profile */
-   .profileTitle {
+  }
+  .loginInput {
+    font-size: 30px;
+  }
+  .eye {
+    width: 60px;
+    height: 30px;
+    vertical-align: middle;
+  }
+  .loginSwitch {
+    font-size: 32px;
+  }
+  /* Profile */
+  .profileTitle {
     width: 600px;
-   }
-   .profileTitle > h3 {
-    font-size:48px;
-   }
-   .userHistory {
+  }
+  .profileTitle > h3 {
+    font-size: 48px;
+  }
+  .userHistory {
     width: 600px;
-   }
-   .userHistory > h4 {
+  }
+  .userHistory > h4 {
     font-size: 36px;
-   }
-   .userHistory > div > div {
+  }
+  .userHistory > div > div {
     font-size: 30px;
-   }
-   .userHistory > div {
+  }
+  .userHistory > div {
     line-height: 3em;
-   }
-   .listDiv {
+  }
+  .listDiv {
     width: 525px;
-   }
-   .listDiv {
-    margin-bottom:15px;
-   }
-   .statusDiv {
+  }
+  .listDiv {
+    margin-bottom: 15px;
+  }
+  .statusDiv {
     width: 550px;
-   }
-   .historyButton {
-    font-size:32px;
-    width: 550px;
-   }
-   .historyDivider {
-    width: 550px;
-   }
-   #purchaseToast {
+  }
+  .historyButton {
     font-size: 32px;
-   }
-   .userViewPass {
-    width: 700px;
-   }
-   .userViewPass > button {
+    width: 550px;
+  }
+  .historyDivider {
+    width: 550px;
+  }
+  #purchaseToast {
     font-size: 32px;
-    width:350px;
-   }
-   .userViewPass > input {
-    font-size:32px;
-   }
-   .changePassButton {
-     width:350px;
-     font-size:32px;
-   }
-   .changePassForm {
-    font-size:32px;
+  }
+  .userViewPass {
     width: 700px;
-   }
-   .changePassForm > input {
-    font-size:32px;
-    margin-bottom:20px;
-   }
-   .changePassSubmit {
-    font-size:32px;
-   }
-   .booksvg, .gearsvg {
+  }
+  .userViewPass > button {
+    font-size: 32px;
+    width: 350px;
+  }
+  .userViewPass > input {
+    font-size: 32px;
+  }
+  .changePassButton {
+    width: 350px;
+    font-size: 32px;
+  }
+  .changePassForm {
+    font-size: 32px;
+    width: 700px;
+  }
+  .changePassForm > input {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+  .changePassSubmit {
+    font-size: 32px;
+  }
+  .booksvg,
+  .gearsvg {
     width: 50px;
-   }
-   /* Logout */
-   #LogoutLabel {
-    font-size:50px;
-    margin-left:20px;
-   }
-   .logoutDialog {
+  }
+  /* Logout */
+  #LogoutLabel {
+    font-size: 50px;
+    margin-left: 20px;
+  }
+  .logoutDialog {
     /* display:grid; */
-    max-width:max-content;
-   }
-   .logoutContent {
+    max-width: max-content;
+  }
+  .logoutContent {
     width: 700px;
     text-align: center;
-   }
-   .logoutButtons {
+  }
+  .logoutButtons {
     font-size: 28px;
     margin-right: 10px;
-   }
-   /* Purchase Modal */
-   .purchaseModalTitle {
+  }
+  /* Purchase Modal */
+  .purchaseModalTitle {
     font-size: 32px;
-   }
-   .confirmModal > h4 {
+  }
+  .confirmModal > h4 {
     font-size: 32px;
-   }
-   .confirmModal > strong {
+  }
+  .confirmModal > strong {
     font-size: 28px;
-   }
-   .confirmModal > form > label {
+  }
+  .confirmModal > form > label {
     font-size: 28px;
-   }
-   .purchaseModalDialog {
+  }
+  .purchaseModalDialog {
     max-width: 700px;
-   }
-   .purchaseModalSelectDiv {
+  }
+  .purchaseModalSelectDiv {
     font-size: 20px;
-   }
-   .purchaseModalSelect {
-    font-size:28px;
-   }
-   .purchaseModalEstimate {
-    font-size:28px;
-   }
-   .purchaseModalButtons {
+  }
+  .purchaseModalSelect {
     font-size: 28px;
-   }
-   /* About */
-   .aboutDiv > h1 {
-    font-size:90px;
-   }
-   .aboutDiv {
+  }
+  .purchaseModalEstimate {
+    font-size: 28px;
+  }
+  .purchaseModalButtons {
+    font-size: 28px;
+  }
+  /* About */
+  .aboutDiv > h1 {
+    font-size: 90px;
+  }
+  .aboutDiv {
     font-size: 32px;
-   }
+  }
 }
 
 #navbarNavDropdown > ul {
-  flex-direction:row;
-  justify-content:space-between;
+  flex-direction: row;
+  justify-content: space-between;
 }
-

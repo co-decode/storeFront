@@ -3,8 +3,16 @@ const { typeDefs } = require("./Schema/TypeDefs");
 const { resolvers } = require("./Schema/Resolvers");
 const mongoose = require("mongoose");
 
+const cors = require("cors")
 const express = require("express");
 const app = express();
+
+app.use(
+  cors({
+      origin: '*',
+  })
+)
+
 
 async function startApolloServer(typeDefs, resolvers) {
   const server = new ApolloServer({ typeDefs, resolvers });

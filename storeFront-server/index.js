@@ -13,13 +13,18 @@ async function startApolloServer(typeDefs, resolvers) {
 
   server.applyMiddleware({ app });
 
-  await mongoose.connect("mongodb://127.0.0.1:27017/storeFront", {
+  // mongodb://127.0.0.1:27017/storeFront
+  // "mongodb+srv://codecode60:breakingmybackoverhere@storefrontcluster.hvoaqpo.mongodb.net/storeFront?retryWrites=true&w=majority"
+
+  await mongoose.connect(process.env.DATABASE, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   } );
 
-  app.listen({ port: 3001 }, () => {
-    console.log("SERVER RUNNING ON PORT 3001");
+  const PORT = process.env.PORT || 3001
+
+  app.listen(PORT, () => {
+    console.log(`SERVER RUNNING ON PORT ${PORT}`);
   });
 }
 

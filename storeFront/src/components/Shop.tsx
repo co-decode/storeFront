@@ -174,7 +174,7 @@ export default function Shop({ offset, limit }: variablesQ) {
                   </div>
                 ) : (
                   <img
-                    src={`../../src/assets/${val.image}.jpg`}
+                    src={`/${val.image}.jpg`}
                     className="card-img-top wrapper-img"
                     alt={val.image}
                   />

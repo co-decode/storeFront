@@ -180,7 +180,7 @@ export default function Cart() {
                   <div className="cart-item">
                     <div className="item-image">
                       <img
-                        src={`../../src/assets/${item.image}.jpg`}
+                        src={`/${item.image}.jpg`}
                         alt={item.image}
                       />
                     </div>

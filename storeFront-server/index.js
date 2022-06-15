@@ -23,7 +23,7 @@ async function startApolloServer(typeDefs, resolvers) {
 
   // mongodb://127.0.0.1:27017/storeFront
   // "mongodb+srv://codecode60:breakingmybackoverhere@storefrontcluster.hvoaqpo.mongodb.net/storeFront?retryWrites=true&w=majority"
-
+  // process.env.DATABASE
   await mongoose.connect(process.env.DATABASE, {
     useUnifiedTopology: true,
     useNewUrlParser: true,

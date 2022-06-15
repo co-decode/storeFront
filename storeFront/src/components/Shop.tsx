@@ -47,7 +47,6 @@ export default function Shop({ offset, limit }: variablesQ) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data, fetching, error } = result;
-  if (error) return <p>Something has gone wrong: {error.message}</p>;
 
   useEffect(() => {
     function watchWidth() {
@@ -149,6 +148,8 @@ export default function Shop({ offset, limit }: variablesQ) {
   const handleGo = () => {
     navigate("/cart");
   };
+
+  if (error) return <p>Something has gone wrong: {error.message}</p>;
 
   return (
     <div>

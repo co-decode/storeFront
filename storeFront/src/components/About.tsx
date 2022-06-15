@@ -8,8 +8,7 @@ export default function About() {
         </h1>
         <p className="offset-1 firstP">
           This site is a personal project for the demonstration of the following
-          technologies: </p>{/*  mongodb, nodejs, express, apollo server, urql,
-          vite, react, redux, boostrap 5.1 and typescript. */}
+          technologies: </p>
           <div className="svgCollection mt-4 offset-1 mb-4">
         <div className="mongodb"></div>
         <div className="nodejs"></div>
@@ -25,11 +24,12 @@ export default function About() {
         <div className="git"></div>
         <div className="github"></div>
         <div className="heroku"></div>
+        <div className="netlify"></div>
       </div>
         <p className="offset-1">
           The database is deployed on MongoDB Atlas, <br />
           The server is deployed from Heroku, <br />
-          The client is hosted with Github-Pages.
+          The client is hosted with Netlify.
         </p>
         <p className=" offset-1">
           All images were obtained under Creative Commons licence <br />

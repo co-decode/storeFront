@@ -84,7 +84,7 @@ export default function Cart() {
 
   const confirmOrder = (id: string, orders: CartOrder) => {
     const variables = { id, orders };
-    sendOrder(variables).then((result) =>
+    sendOrder(variables).then((result) => 
       result.error ? console.error(result.error) : null
     );
   };

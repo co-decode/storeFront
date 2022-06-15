@@ -184,6 +184,10 @@
   position: relative;
   height: 0;
   padding-top: 100%;
+
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .wrapper-img {
@@ -203,6 +207,12 @@
 
 .mb-33 {
   margin-bottom: 33px;
+}
+
+.loginSpinner {
+  width:20px;
+  height:20px;
+  margin-left:10px;
 }
 
 .eyeopen {
@@ -308,6 +318,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.imageSpinner {
+  position: absolute;
+  top: 50%;
+
+  width:100px;
+  height:100px;
 }
 
 /* Cart */
@@ -449,6 +467,23 @@
   line-height: 2em;
 }
 
+.historyDiv {
+  display:flex;
+  position:relative;
+}
+.historySpinner {
+  position:absolute;
+  right: -40px;
+  width:20px;
+  height:20px;
+}
+.historySpinnerLeft {
+  position:absolute;
+  left: -40px;
+  width:20px;
+  height:20px;
+}
+
 .historyButton {
   width: 300px;
   height: 24px;
@@ -475,6 +510,12 @@
 
 .changePassButton {
   width: 188px;
+}
+
+.changePassSpinner {
+  position:relative;
+  vertical-align: bottom;
+  margin-left:20px;
 }
 
 .changePassForm {

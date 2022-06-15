@@ -135,7 +135,6 @@ export default function User() {
     query: queryOrders,
     variables: { id: id },
   });
-  // if (historyResult.fetching) return <div>loading...</div>;
 
   const passwordChange = (id: string, password: string) => {
     const variables = { id, password };
@@ -204,9 +203,7 @@ export default function User() {
       className="profileDisplay"
       style={{ display: "grid", justifyContent: "center" }}
     >
-      <div 
-        className="profileTitle respondWidth-sm"
-      >
+      <div className="profileTitle respondWidth-sm">
         <h3>Welcome {currentUser.username},</h3>
         <div
           id="historyOrPass"
@@ -216,25 +213,25 @@ export default function User() {
           title="Toggle Settings"
         />
         <div
-        className="position-fixed p-3 purchaseToastContainer"
-        style={{ zIndex: 11 }}
-      >
-        <div
-          id="purchaseToast"
-          className="toast bg-success border-0 text-white shopToast"
-          role="alert"
-          aria-live="assertive"
-          aria-atomic="true"
+          className="position-fixed p-3 purchaseToastContainer"
+          style={{ zIndex: 11 }}
         >
-          <div className="toast-body">Thank you for your purchase!</div>
-          <button
-            type="button"
-            className="btn-close bg-light me-3"
-            data-bs-dismiss="toast"
-            aria-label="Close"
-          ></button>
+          <div
+            id="purchaseToast"
+            className="toast bg-success border-0 text-white shopToast"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+          >
+            <div className="toast-body">Thank you for your purchase!</div>
+            <button
+              type="button"
+              className="btn-close bg-light me-3"
+              data-bs-dismiss="toast"
+              aria-label="Close"
+            ></button>
+          </div>
         </div>
-      </div>  
       </div>
 
       {historyOrPass === "PASSWORD" ? (
@@ -247,25 +244,24 @@ export default function User() {
               {showPass ? "Hide Password" : "View Password"}
             </button>
             {showPass ? (
-              <input
-                type="text"
-                value={currentUser.password}
-                disabled
-              />
+              <input type="text" value={currentUser.password} disabled />
             ) : (
-              <input
-                type="password"
-                value={currentUser.password}
-                disabled
-              />
+              <input type="password" value={currentUser.password} disabled />
             )}
           </div>
-          <button
-            className="btn btn-dark mt-5 changePassButton"
-            onClick={toggleForm}
-          >
-            Change Your Password
-          </button>
+          <div>
+            <button
+              className="btn btn-dark mt-5 changePassButton"
+              onClick={toggleForm}
+            >
+              Change Your Password
+            </button>
+            {changeResult.fetching ? (
+              <div className="spinner-border changePassSpinner" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            ) : null}
+          </div>
         </>
       ) : null}
       {showChangeForm && historyOrPass === "PASSWORD" ? (
@@ -292,7 +288,10 @@ export default function User() {
               onChange={(e) => setChangePass2(e.target.value)}
               onFocus={resetFeedback}
             />
-            <button className="btn btn-danger mt-3 changePassSubmit" type="submit">
+            <button
+              className="btn btn-danger mt-3 changePassSubmit"
+              type="submit"
+            >
               Submit
             </button>
             <div className="valid-feedback">
@@ -314,11 +313,23 @@ export default function User() {
       ) : null}
 
       {historyOrPass === "HISTORY" ? (
-        <div className="userHistory respondWidth-sm"
-        >
-          <h4>Purchase History</h4>
-          {!historyResult.fetching && historyResult.data.getUser.orders[0]  ? (
-            <div style={{ marginLeft: "0"}}>
+        <div className="userHistory respondWidth-sm">
+          <div className="historyDiv">
+            {cancelResult.fetching || historyResult.fetching ?
+            <div className="spinner-border historySpinnerLeft" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+            : null}
+            <h4>Purchase History</h4>
+            {cancelResult.fetching || historyResult.fetching ?
+            <div className="spinner-border historySpinner" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+            : null}
+          </div>
+
+          {!historyResult.fetching && historyResult.data.getUser.orders[0] ? (
+            <div style={{ marginLeft: "0" }}>
               {Object.assign([], historyResult.data.getUser.orders)
                 .reverse()
                 .map((val: Order) => {
@@ -354,7 +365,8 @@ export default function User() {
                   );
                 })}
             </div>
-          ) : !historyResult.fetching && !historyResult.data.getUser.orders[0] ? (
+          ) : !historyResult.fetching &&
+            !historyResult.data.getUser.orders[0] ? (
             <div
               style={{
                 display: "flex",
@@ -370,7 +382,9 @@ export default function User() {
                 Go to Shop
               </button>
             </div>
-          ) : (<div>...Loading...</div>)}
+          ) : (
+            <div>...Loading...</div>
+          )}
         </div>
       ) : null}
     </div>

@@ -75,36 +75,36 @@ export default function Shop({ offset, limit }: variablesQ) {
     };
   }, []);
 
-  useEffect(()=> {
+  useEffect(() => {
     function initialiseArray() {
       if (window.innerWidth <= 623) {
-        dispatch(setLimit(3))
+        dispatch(setLimit(3));
       } else if (window.innerWidth > 623 && window.innerWidth <= 959) {
-        dispatch(setLimit(4))
+        dispatch(setLimit(4));
       } else if (window.innerWidth > 959 && window.innerWidth <= 1295) {
-        dispatch(setLimit(6))
-      } else if (window.innerWidth > 1295 && window.innerWidth <= 1631 ) {
-        dispatch(setLimit(8))
-      } else if (window.innerWidth > 1295 && window.innerWidth <= 1659 ) {
-        dispatch(setLimit(10))
-      } else if (window.innerWidth > 1659 && window.innerWidth <= 2191 ) {
-        dispatch(setLimit(6)) 
+        dispatch(setLimit(6));
+      } else if (window.innerWidth > 1295 && window.innerWidth <= 1631) {
+        dispatch(setLimit(8));
+      } else if (window.innerWidth > 1295 && window.innerWidth <= 1659) {
+        dispatch(setLimit(10));
+      } else if (window.innerWidth > 1659 && window.innerWidth <= 2191) {
+        dispatch(setLimit(6));
       } else if (window.innerWidth > 2191) {
-        dispatch(setLimit(8))
+        dispatch(setLimit(8));
       }
     }
     initialiseArray();
     window.addEventListener("resize", initialiseArray);
     return () => {
       window.removeEventListener("resize", initialiseArray);
-    }
-  },[])
+    };
+  }, []);
 
-  useEffect(()=> {
-    if (page > Math.ceil(16/limit)) {
-      dispatch(setPage(0))
+  useEffect(() => {
+    if (page > Math.ceil(16 / limit)) {
+      dispatch(setPage(0));
     }
-  },[limit])
+  }, [limit]);
 
   const handleCart = (
     item: string,
@@ -155,7 +155,7 @@ export default function Shop({ offset, limit }: variablesQ) {
     <div>
       <div
         className="row gap-5 justify-content-center mt-2 item-displayer"
-        style={{ width: "100%", marginLeft:0, marginRight:0 }}
+        style={{ width: "100%", marginLeft: 0, marginRight: 0 }}
       >
         {(fetching
           ? [{ item: "loading...", image: "blank", price: 0 }]
@@ -168,11 +168,17 @@ export default function Shop({ offset, limit }: variablesQ) {
               style={{ padding: 0 }}
             >
               <div className="wrapper">
-                <img
-                  src={`../../src/assets/${val.image}.jpg`}
-                  className="card-img-top wrapper-img"
-                  alt={val.image}
-                />
+                {fetching ? (
+                  <div className="spinner-border imageSpinner" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                ) : (
+                  <img
+                    src={`../../src/assets/${val.image}.jpg`}
+                    className="card-img-top wrapper-img"
+                    alt={val.image}
+                  />
+                )}
               </div>
               <div className="card-body shopCard">
                 <div className="cardX">
@@ -202,22 +208,25 @@ export default function Shop({ offset, limit }: variablesQ) {
       </div>
       <nav aria-label="Item Pages" className="shopNav">
         <ul className="pagination pagination-lg justify-content-center mt-4">
-          {new Array(Math.ceil(16 / limit)).fill(1).map((val, index)=>index).map((val) => {
-            return (
-              <li
-                key={val}
-                className={`page-item ${page === val ? "active" : ""}`}
-                aria-current="page"
-              >
-                <span
-                  className="page-link"
-                  onClick={() => dispatch(setPage(val))}
+          {new Array(Math.ceil(16 / limit))
+            .fill(1)
+            .map((val, index) => index)
+            .map((val) => {
+              return (
+                <li
+                  key={val}
+                  className={`page-item ${page === val ? "active" : ""}`}
+                  aria-current="page"
                 >
-                  {val + 1}
-                </span>
-              </li>
-            );
-          })}
+                  <span
+                    className="page-link"
+                    onClick={() => dispatch(setPage(val))}
+                  >
+                    {val + 1}
+                  </span>
+                </li>
+              );
+            })}
         </ul>
         {cart.items[0].item ? (
           <button className="btn btn-dark mb-1 navButt" onClick={handleGo}>
@@ -225,7 +234,10 @@ export default function Shop({ offset, limit }: variablesQ) {
           </button>
         ) : null}
       </nav>
-      <div className="position-fixed bottom-0 end-0 m-3 " style={{ zIndex: 11 }}>
+      <div
+        className="position-fixed bottom-0 end-0 m-3 "
+        style={{ zIndex: 11 }}
+      >
         <div
           id="liveToast"
           className="toast bg-dark border-0 text-white shopToast"
@@ -233,7 +245,9 @@ export default function Shop({ offset, limit }: variablesQ) {
           aria-live="assertive"
           aria-atomic="true"
         >
-          <div className="toast-body shopToastBody">Item added to Shopping Cart</div>
+          <div className="toast-body shopToastBody">
+            Item added to Shopping Cart
+          </div>
           <button
             type="button"
             className="btn-close bg-light me-3 shopToastButton"

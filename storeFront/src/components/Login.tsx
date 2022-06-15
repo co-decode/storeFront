@@ -272,6 +272,11 @@ export default function Login() {
               <label htmlFor="formControlInput1" className="form-label">
                 Username
               </label>
+              {existResult.fetching || fetching || createUserResult.fetching ?
+              <div className="spinner-border loginSpinner" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+              : null }
               <input
                 type="text"
                 className="form-control loginInput"

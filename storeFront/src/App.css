@@ -39,7 +39,7 @@
   scrollbar-width: thin;
 }
 
-@media (max-width: 950px) {
+@media (max-width: 990px) {
   .svgCollection {
     width: 90%;
     

@@ -810,6 +810,7 @@
   .historyButton {
     font-size: 32px;
     width: 550px;
+    height:auto;
   }
   .historyDivider {
     width: 550px;

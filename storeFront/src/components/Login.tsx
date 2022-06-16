@@ -69,9 +69,7 @@ export default function Login() {
   });
 
   useEffect(() => {
-    // if(userField){
     refreshExistence();
-    // }
   }, [userField]);
 
   useEffect(() => {
@@ -194,7 +192,6 @@ export default function Login() {
     });
   }, [login]);
 
-  // if (fetching) return <p>Loading...</p>;
   if (error) return <p>Something has gone wrong: {error.message}</p>;
 
   const createUser = (username: string, password: string) => {

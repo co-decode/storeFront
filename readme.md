@@ -2,7 +2,7 @@
 An ecommerce mock up.
 
 ## Technologies used:
-In the back end:
+**In the back end:**
 
 Database
 - MongoDB and Mongoose
@@ -13,7 +13,7 @@ Server
 GraphQL
 - Apollo Server
 
-In the front end:
+**In the front end:**
 
 Environment
 - Vite and Typescript
@@ -30,7 +30,7 @@ GraphQL Client
 Version Control:
 - Git and Github
 
-Deployment:
+**Deployment:**
 
 Database
 - MongoDB Atlas

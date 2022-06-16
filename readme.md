@@ -6,8 +6,10 @@ In the back end:
 
 Database
 - MongoDB and Mongoose
+
 Server
 - NodeJS, Express
+
 GraphQL
 - Apollo Server
 
@@ -15,10 +17,13 @@ In the front end:
 
 Environment
 - Vite and Typescript
+
 Framework
 - React, React-Router and Redux
+
 User Interface
 - Bootstrap 5.1 and CSS
+
 GraphQL Client
 - URQL
 

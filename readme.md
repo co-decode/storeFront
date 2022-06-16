@@ -29,8 +29,10 @@ Deployment:
 
 Database
 - MongoDB Atlas
+
 Server
 - Heroku
+
 Client
 - Github Pages
 

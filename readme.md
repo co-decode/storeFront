@@ -3,6 +3,7 @@ An ecommerce mock up.
 
 ## Technologies used:
 In the back end:
+
 Database
 - MongoDB and Mongoose
 Server
@@ -11,6 +12,7 @@ GraphQL
 - Apollo Server
 
 In the front end:
+
 Environment
 - Vite and Typescript
 Framework
@@ -24,6 +26,7 @@ Version Control:
 - Git and Github
 
 Deployment:
+
 Database
 - MongoDB Atlas
 Server
@@ -83,8 +86,10 @@ For smaller screen size, the layout of the pagination bar and the Go to Cart but
 ### The Cart Page:
 The cart page features:
 - A item list, with the ability to modify quantity or remove from cart.
+
     The item list reads and modifies an Order Details object and maps its item name, image, quantity and price.
 - A purchase confirmation modal, with mock payment and shipping details.
+
     The purchase modal timestamps the Order Details object on confirmation, finally submitting it for mutation of the database.
 - An items in cart counter, which counts the number of unique items in cart as well as the total number of items.
 - A cart total in the bottom right corner which tracks the total value of the cart.

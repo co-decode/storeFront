@@ -11,7 +11,7 @@ const client = createClient({
   url: "https://node-store-front.herokuapp.com/graphql",
 });
 
-// http://localhost:3001/graphql
+// "http://localhost:3001/graphql"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

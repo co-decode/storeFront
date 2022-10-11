@@ -1,4 +1,5 @@
 const { Inv, Users } = require("../model");
+const bcrypt = require("bcryptjs")
 
 const resolvers = {
   Query: {
@@ -20,7 +21,14 @@ const resolvers = {
       return await Users.findById(id);
     },
     checkLogin: async(p, {username, password}) => {
-      return await Users.find({username, password});
+      const user = await Users.find({username});
+      if (user.length === 0) return [null]
+      const passwordCheck = await bcrypt.compare(
+        password,
+        user[0].password
+      )
+      if (passwordCheck) return user
+      else return [null]
     },
     checkExistence: async(p, {username}) => {
       return await Users.find({username});
@@ -59,7 +67,9 @@ const resolvers = {
       const { username, password } = args.user;
       const res = await Users.find({username:username})
       if (!res[0]){
-        const user = new Users({ username, password });
+        const hashedPassword = await bcrypt.hash(password, 10);
+        if (hashedPassword == null) return
+        const user = new Users({ username, password: hashedPassword });
         await user.save();
         return user;
       }
@@ -71,10 +81,10 @@ const resolvers = {
     },
     updatePass: async (p,args) => {
       const {id, password} = args;
-      // const {password} = args.user;
       const updates = {};
       if (password !== undefined) {
-        updates.password = password;
+        const hashedPassword = await bcrypt.hash(password, 10)
+        updates.password = hashedPassword;
       }
       const userUp = await Users.findByIdAndUpdate(id, updates, {new:true});
       return userUp;

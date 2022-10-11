@@ -9,9 +9,11 @@ const app = express();
 
 app.use(
   cors({
-      origin: '*',
+      origin: "https://node-store-front.netlify.app/",
   })
 )
+// "https://node-store-front.netlify.app/"
+
 
 
 async function startApolloServer(typeDefs, resolvers) {

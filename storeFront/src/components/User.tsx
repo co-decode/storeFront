@@ -387,6 +387,10 @@ export default function User() {
           )}
         </div>
       ) : null}
+      <div style={{visibility: "hidden"}}>
+            <div className="booksvg"/>
+            <div className="gearsvg"/>
+      </div>
     </div>
   );
 }

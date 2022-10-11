@@ -9,6 +9,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 const client = createClient({
   url: "https://storefront.up.railway.app/",
+  fetchOptions: () => {
+    return {
+      credentials: "include"
+    }
+  }
 });
 
 // "http://localhost:3001/graphql"

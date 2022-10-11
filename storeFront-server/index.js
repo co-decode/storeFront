@@ -9,7 +9,9 @@ const app = express();
 
 app.use(
   cors({
-      origin: "*"
+      origin: ["https://node-store-front.netlify.app","https://node-store-front.netlify.app/"],
+      credentials: true,
+      methods: "PUT,POST,GET,DELETE,OPTIONS",
   })
 )
 // "https://node-store-front.netlify.app/"

@@ -8,7 +8,7 @@ import { Provider as URQLProvider, createClient } from "urql";
 import { BrowserRouter as Router } from "react-router-dom";
 
 const client = createClient({
-  url: "https://storefront.up.railway.app/",
+  url: "https://storefront.up.railway.app/graphql",
   fetchOptions: () => {
     return {
       credentials: "include"

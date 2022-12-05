@@ -24,9 +24,9 @@ async function startApolloServer(typeDefs, resolvers) {
   server.applyMiddleware({ app });
 
   // mongodb://127.0.0.1:27017/storeFront
-  // "mongodb+srv://codecode60:breakingmybackoverhere@storefrontcluster.hvoaqpo.mongodb.net/storeFront?retryWrites=true&w=majority"
+  // "mongodb+srv://codecode60:breakingmybackoverhere@cluster0.kpwvl3o.mongodb.net/?retryWrites=true&w=majority"
   // process.env.DATABASE
-  await mongoose.connect("mongodb+srv://codecode60:breakingmybackoverhere@storefrontcluster.hvoaqpo.mongodb.net/storeFront?retryWrites=true&w=majority", {
+  await mongoose.connect("mongodb+srv://codecode60:breakingmybackoverhere@cluster0.kpwvl3o.mongodb.net/?retryWrites=true&w=majority", {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   } );

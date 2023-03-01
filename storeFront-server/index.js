@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-      origin: "*",
+      origin: "https://node-store-front.netlify.app/",
   })
 )
 // "https://node-store-front.netlify.app/"
@@ -26,7 +26,7 @@ async function startApolloServer(typeDefs, resolvers) {
   // mongodb://127.0.0.1:27017/storeFront
   // "mongodb+srv://codecode60:breakingmybackoverhere@storefrontcluster.hvoaqpo.mongodb.net/storeFront?retryWrites=true&w=majority"
   // process.env.DATABASE
-  await mongoose.connect("mongodb://127.0.0.1:27017/storeFront", {
+  await mongoose.connect("mongodb+srv://codecode60:breakingmybackoverhere@storefrontcluster.hvoaqpo.mongodb.net/storeFront?retryWrites=true&w=majority", {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   } );

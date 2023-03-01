@@ -8,11 +8,12 @@ import { Provider as URQLProvider, createClient } from "urql";
 import { BrowserRouter as Router } from "react-router-dom";
 
 const client = createClient({
-  url: "https://storefront.up.railway.app/graphql",
+  url: "http://localhost:3001/graphql",
 });
 
 // "http://localhost:3001/graphql"
 // "https://node-store-front.herokuapp.com/graphql"
+// "https://storefront.up.railway.app/graphql"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

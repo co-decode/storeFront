@@ -9,7 +9,7 @@ import {
   setLogin,
 } from "../slices/loginSlice";
 import { setShopping } from "../slices/cartSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const CreateAccount = `
   mutation ($username: String, $password: String) {
@@ -45,6 +45,8 @@ export default function Login() {
   const navigate = useNavigate();
   const userField = useSelector((state: RootState) => state.login.username);
   const passField = useSelector((state: RootState) => state.login.password);
+  const usernameRef = useRef<HTMLInputElement|null>(null);
+  const passwordRef = useRef<HTMLInputElement|null>(null);
   const currentUser = useSelector(
     (state: RootState) => state.login.currentUser
   );
@@ -221,6 +223,19 @@ export default function Login() {
     setFailedLogin(false);
     dispatch(setPass(e.target.value));
   };
+  const handleTestUser = () => {
+    if (usernameRef.current === null || passwordRef.current === null)
+      return
+    if (confirmCreate !== "none") {
+      setConfirmCreate("none");
+    }
+    setFailedLogin(false);
+    dispatch(setUser("testUser"))
+    dispatch(setPass("testUserPassword"))
+    usernameRef.current.value = "testUser"
+    passwordRef.current.value = "testUserPassword"
+
+  }
 
   const handleSubmit = () => {
     if (login === "EXISTING") {
@@ -279,6 +294,7 @@ export default function Login() {
                 className="form-control loginInput"
                 id="formControlInput1"
                 placeholder="username"
+                ref={usernameRef}
                 onChange={(e) => handleChangeUser(e)}
                 onKeyDown={(e) => enterSubmit(e)}
                 tabIndex={2}
@@ -311,6 +327,7 @@ export default function Login() {
                 className="form-control loginInput"
                 id="formControlInput2"
                 placeholder="password"
+                ref={passwordRef}
                 onChange={(e) => handleChangePass(e)}
                 onKeyDown={(e) => enterSubmit(e)}
                 tabIndex={3}
@@ -344,6 +361,15 @@ export default function Login() {
             ? "Create a New Account"
             : "Login with an Existing Account"}
         </button>
+        {login === "EXISTING" ? 
+          <button
+            className="btn btn-warning mt-2 testUser"
+            onClick={()=>handleTestUser()}
+            tabIndex={7}
+          >
+            Login with a Test User
+            </button>
+          : null}
       </div>
     </div>
   );

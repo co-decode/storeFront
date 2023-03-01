@@ -24,11 +24,14 @@ interface variablesQ {
   limit: number;
 }
 
-interface OrderItems {
+interface OrderItem {
   item: string;
-  amount: number;
   price: number;
   image: string;
+}
+
+interface OrderItems extends OrderItem {
+  amount: number;
 }
 
 interface CartOrder {
@@ -47,7 +50,7 @@ export default function Shop({ offset, limit }: variablesQ) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data, fetching, error } = result;
-
+  
   useEffect(() => {
     function watchWidth() {
       if (window.innerWidth <= 576) {
@@ -137,7 +140,7 @@ export default function Shop({ offset, limit }: variablesQ) {
     dispatch(setCart(orderDetail));
   };
 
-  const handleCartClick = (val: OrderItems) => {
+  const handleCartClick = (val: OrderItem) => {
     if (!fetching) {
       handleCart(val.item, val.price, `amount${val.item}`, val.image);
       const toastLive = document.getElementById("liveToast");
@@ -160,7 +163,7 @@ export default function Shop({ offset, limit }: variablesQ) {
         {(fetching
           ? [{ item: "loading...", image: "blank", price: 0 }]
           : data.getItemsPaged
-        ).map((val: any) => {
+        ).map((val: OrderItem) => {
           return (
             <div
               key={val.item}

@@ -761,6 +761,9 @@ html {
     margin-top: 50px;
     max-width: 900px;
   }
+  .loginCard {
+    width: 500px;
+  }
   .loginCard > h5 {
     font-size: 38px;
   }
